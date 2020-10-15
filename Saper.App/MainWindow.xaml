@@ -6,13 +6,13 @@
         xmlns:local="clr-namespace:Saper.App"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="60" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Border Margin="10" BorderBrush="Black" BorderThickness="1">
+        <Border Margin="0 0 0 10" BorderBrush="Black" BorderThickness="1">
             <Grid Margin="10">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100" />
@@ -21,7 +21,7 @@
                 </Grid.ColumnDefinitions>
             </Grid>
         </Border>
-        <Border Margin="10" Grid.Row="1" BorderBrush="Black" BorderThickness="1">
+        <Border Grid.Row="1" BorderBrush="Black" BorderThickness="1">
             
         </Border>
     </Grid>
