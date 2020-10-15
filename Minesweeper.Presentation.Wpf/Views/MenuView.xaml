@@ -11,9 +11,9 @@
     <Grid>
         <StackPanel>
             <TextBlock Text="Minesweeper" FontSize="40" Foreground="Red" TextAlignment="Center" />
-            <Button mvx:Bi.nd="Command DoSomethingCommand" Content="Easy" />
-            <Button Content="Medium" />
-            <Button Content="Hard" />
+            <Button mvx:Bi.nd="Command NewGameEasyCommand" Content="Easy" />
+            <Button mvx:Bi.nd="Command NewGameNormalCommand" Content="Medium" />
+            <Button mvx:Bi.nd="Command NewGameHardCommand" Content="Hard" />
         </StackPanel>
     </Grid>
 </views:MvxWpfView>
