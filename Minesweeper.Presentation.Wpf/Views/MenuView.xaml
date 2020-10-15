@@ -11,7 +11,7 @@
     <Grid>
         <StackPanel>
             <TextBlock Text="Minesweeper" FontSize="40" Foreground="Red" TextAlignment="Center" />
-            <Button Content="Easy" />
+            <Button mvx:Bi.nd="Command DoSomethingCommand" Content="Easy" />
             <Button Content="Medium" />
             <Button Content="Hard" />
         </StackPanel>
