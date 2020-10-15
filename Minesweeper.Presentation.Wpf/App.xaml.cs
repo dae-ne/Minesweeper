@@ -2,7 +2,7 @@
 using MvvmCross.Platforms.Wpf.Core;
 using MvvmCross.Platforms.Wpf.Views;
 
-namespace Saper.Presentation.Wpf
+namespace Minesweeper.Presentation.Wpf
 {
     /// <summary>
     /// Interaction logic for App.xaml

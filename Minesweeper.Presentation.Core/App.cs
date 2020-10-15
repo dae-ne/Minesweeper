@@ -1,7 +1,7 @@
 ﻿using MvvmCross.ViewModels;
-using Saper.Presentation.Core.ViewModels;
+using Minesweeper.Presentation.Core.ViewModels;
 
-namespace Saper.Presentation.Core
+namespace Minesweeper.Presentation.Core
 {
     public class App : MvxApplication
     {

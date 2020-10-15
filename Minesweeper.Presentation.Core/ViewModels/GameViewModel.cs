@@ -1,6 +1,6 @@
 ﻿using MvvmCross.ViewModels;
 
-namespace Saper.Presentation.Core.ViewModels
+namespace Minesweeper.Presentation.Core.ViewModels
 {
     class GameViewModel : MvxViewModel
     {

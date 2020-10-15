@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Saper.Presentation.Core\Saper.Presentation.Core.csproj" />
+    <ProjectReference Include="..\Minesweeper.Presentation.Core\Minesweeper.Presentation.Core.csproj" />
   </ItemGroup>
 
 </Project>

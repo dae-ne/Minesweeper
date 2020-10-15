@@ -1,6 +1,6 @@
 ﻿using MvvmCross.Platforms.Wpf.Views;
 
-namespace Saper.Presentation.Wpf.Views
+namespace Minesweeper.Presentation.Wpf.Views
 {
     /// <summary>
     /// Interaction logic for MenuView.xaml
