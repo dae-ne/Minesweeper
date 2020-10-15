@@ -10,4 +10,8 @@
     <PackageReference Include="MvvmCross.Platforms.Wpf" Version="7.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Saper.Presentation.Core\Saper.Presentation.Core.csproj" />
+  </ItemGroup>
+
 </Project>
