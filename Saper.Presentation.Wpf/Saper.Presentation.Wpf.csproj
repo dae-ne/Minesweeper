@@ -6,4 +6,12 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MvvmCross.Platforms.Wpf" Version="7.0.1" />
+  </ItemGroup>
+
 </Project>
