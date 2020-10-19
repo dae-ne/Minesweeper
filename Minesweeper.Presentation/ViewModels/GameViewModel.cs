@@ -7,7 +7,8 @@ namespace Minesweeper.Presentation.ViewModels
     {
         private const string _MenuButtonText = "Start Game";
         private const string _GameButtonText = "Stop";
-
+        private readonly GameStatusViewModel _gameStatusViewModel;
+        private readonly MenuViewModel _menuViewModel;
         private BindableCollection<FieldModel> _fields;
 
         public BindableCollection<FieldModel> Fields
@@ -68,7 +69,7 @@ namespace Minesweeper.Presentation.ViewModels
             get { return WindowHeight / 8.0; }
         }
 
-        public GameViewModel()
+        public GameViewModel(GameStatusViewModel gameStatusViewModel, MenuViewModel menuViewModel)
         {
             NavButtonText = _MenuButtonText;
 
@@ -113,6 +114,9 @@ namespace Minesweeper.Presentation.ViewModels
             Fields.Add(new FieldModel { Text = "", IsEnabled = true });
             Fields.Add(new FieldModel { Text = "", IsEnabled = true });
             Fields.Add(new FieldModel { Text = "", IsEnabled = true });
+            _gameStatusViewModel = gameStatusViewModel;
+            _menuViewModel = menuViewModel;
+            ActivateItem(_menuViewModel);
         }
 
         public void NavigateClick()
@@ -120,10 +124,12 @@ namespace Minesweeper.Presentation.ViewModels
             if (NavButtonText == _MenuButtonText)
             {
                 NavButtonText = _GameButtonText;
+                ActivateItem(_gameStatusViewModel);
             }
             else
             {
                 NavButtonText = _MenuButtonText;
+                ActivateItem(_menuViewModel);
             }
         }
 
