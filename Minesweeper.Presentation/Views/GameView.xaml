@@ -4,11 +4,45 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Minesweeper.Presentation.Views"
+        xmlns:cal="http://www.caliburnproject.org"
         mc:Ignorable="d"
-        Title="GameView"
-        Height="{Binding WindowHeight, Mode=TwoWay, FallbackValue=450, UpdateSourceTrigger=PropertyChanged}"
-        Width="{Binding WindowWidth, Mode=TwoWay, FallbackValue=800, UpdateSourceTrigger=PropertyChanged}">
+        Title="Minesweeper"
+        MinHeight="400" MinWidth="600"
+        Height="{Binding WindowHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+        Width="{Binding WindowWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
     <Grid>
-        <Button x:Name="DoSomething"></Button>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="50" />
+            </Grid.RowDefinitions>
+
+            <Button x:Name="NavigateClick" Content="{Binding NavButtonText}" Grid.Row="3" />
+        </Grid>
+
+        <ItemsControl x:Name="Fields" Grid.Column="1">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Button Height="{Binding Path=DataContext.FieldHeight, ElementName=Fields}"
+                            Width="{Binding Path=DataContext.FieldWidth, ElementName=Fields}"
+                            IsEnabled="{Binding IsEnabled}"
+                            Content="{Binding Text}"
+                            cal:Message.Attach="[Event PreviewMouseLeftButtonDown] = [Action DoSomething($this)];
+                                [Event PreviewMouseRightButtonDown] = [Action DoSomething($this)]" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </Window>
