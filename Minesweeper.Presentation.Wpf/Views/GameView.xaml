@@ -7,25 +7,19 @@
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                   xmlns:local="clr-namespace:Minesweeper.Presentation.Wpf"
                   mc:Ignorable="d" 
-                  d:DesignHeight="450" d:DesignWidth="800">
+                  d:DesignHeight="450" d:DesignWidth="800"
+                  Width="{Binding Width, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, FallbackValue=500}">
+
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="100" />
             <RowDefinition Height="100" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Button mvx:Bi.nd="Command GoBackCommand" Content="Go back" />
-        <Button Content="xxxxx" Grid.Row="1">
-            <Button.InputBindings>
-                <MouseBinding Command="{Binding DoSomethingCommand}"
-                              MouseAction="LeftClick" />
-                <MouseBinding Command="{Binding GoBackCommand}"
-                              MouseAction="RightClick" />
-            </Button.InputBindings>
-        </Button>
 
-        <ItemsControl Name="ListOfFields" ItemsSource="{Binding Fields}" Grid.Row="2">
+        <!--Game Area-->
+        <ItemsControl Name="WrapPanelOfFields" ItemsSource="{Binding Fields}" Grid.Row="1">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <WrapPanel Margin="10" Orientation="Horizontal" />
@@ -33,14 +27,17 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button Height="50" Width="50" Content="{Binding Text, Mode=TwoWay}">
+                    <Button Height="50"
+                            Width="50"
+                            IsEnabled="{Binding IsEnabled}"
+                            Content="{Binding Text}">
                         <Button.InputBindings>
                             <MouseBinding Command="{Binding DataContext.DoSomethingCommand,
-                                                            ElementName=ListOfFields}"
-                                          CommandParameter="{Binding Path=.}"
-                                          MouseAction="LeftClick" />
+                                                                ElementName=WrapPanelOfFields}"
+                                              CommandParameter="{Binding Path=.}"
+                                              MouseAction="LeftClick" />
                             <MouseBinding Command="{Binding GoBackCommand}"
-                                          MouseAction="RightClick" />
+                                              MouseAction="RightClick" />
                         </Button.InputBindings>
                     </Button>
                 </DataTemplate>

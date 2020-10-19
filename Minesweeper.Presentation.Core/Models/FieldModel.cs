@@ -2,8 +2,8 @@
 {
     class FieldModel
     {
-        public int Index { get; set; }
-
         public string Text { get; set; }
+
+        public bool IsEnabled { get; set; } = true;
     }
 }
