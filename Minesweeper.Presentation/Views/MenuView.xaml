@@ -5,8 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Minesweeper.Presentation.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" Background="Red">
-    <Grid>
-            
-    </Grid>
+             d:DesignHeight="450" d:DesignWidth="300">
+    <StackPanel>
+        <Button Content="Easy" />
+        <Button Content="Normal" />
+        <Button Content="Hard" />
+        <Slider />
+        <Slider />
+        <Slider />
+        <Button Content="Start" />
+    </StackPanel>
 </UserControl>

@@ -24,7 +24,7 @@
                 <RowDefinition Height="50" />
             </Grid.RowDefinitions>
             
-            <ContentControl x:Name="ActiveItem" />
+            <ContentControl x:Name="ActiveItem" Grid.Row="1" />
             <Button x:Name="NavigateClick" Content="{Binding NavButtonText}" Grid.Row="3" />
         </Grid>
 
