@@ -10,6 +10,6 @@
         Width="{Binding WindowWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
     
     <Grid>
-        <ContentControl x:Name="ActiveItem" Grid.Row="1" />
+        <ContentControl x:Name="ActiveItem" />
     </Grid>
 </Window>

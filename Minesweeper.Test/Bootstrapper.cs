@@ -10,7 +10,7 @@ namespace Minesweeper.Test
 {
     public class Bootstrapper : BootstrapperBase
     {
-        private SimpleContainer _container = new SimpleContainer();
+        private readonly SimpleContainer _container = new SimpleContainer();
 
         public Bootstrapper()
         {

@@ -3,7 +3,6 @@ using MvvmCross.Binding.Extensions;
 using MvvmCross.Commands;
 using MvvmCross.Navigation;
 using MvvmCross.ViewModels;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
@@ -12,31 +11,28 @@ namespace Minesweeper.Presentation.Core.ViewModels
     class GameViewModel : MvxViewModel
     {
         private readonly IMvxNavigationService _navigationService;
-        private List<FieldModel> x = new List<FieldModel>();
         private ObservableCollection<FieldModel> _fields;
-        //private int _pageWidth;
-        //private int _pageHeight;
 
         public ObservableCollection<FieldModel> Fields
         {
-            get { return _fields; }
-            set { SetProperty(ref _fields, value); }
+            get => _fields;
+            set => SetProperty(ref _fields, value);
         }
 
         private double _actualWidth;
 
         public double ActualWidth
         {
-            get { return _actualWidth; }
-            set { SetProperty(ref _actualWidth, value); }
+            get => _actualWidth;
+            set => SetProperty(ref _actualWidth, value);
         }
 
         private double _actualHeight;
 
         public double ActualHeight
         {
-            get { return _actualHeight; }
-            set { SetProperty(ref _actualHeight, value); }
+            get => _actualHeight;
+            set => SetProperty(ref _actualHeight, value);
         }
 
 
@@ -92,8 +88,6 @@ namespace Minesweeper.Presentation.Core.ViewModels
             var index = Fields.GetPosition(field);
             Fields.RemoveAt(index);
             Fields.Insert(index, new FieldModel { Text = "1", IsEnabled = false });
-            var x = ActualWidth;
-            var y = ActualHeight;
         }
 
         private void CreateFields()
