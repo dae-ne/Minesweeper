@@ -1,5 +1,4 @@
 ﻿using Caliburn.Micro;
-using Minesweeper.BusinessLogic;
 using Minesweeper.Test.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -15,8 +14,6 @@ namespace Minesweeper.Test
         public Bootstrapper()
         {
             Initialize();
-            GameBoard gb = new GameBoard();
-            gb.GenerateBoard(3, 3, 2);
         }
 
         protected override void Configure()
