@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using Minesweeper.BusinessLogic;
 using Minesweeper.Test.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,8 @@ namespace Minesweeper.Test
 
             _container
                 .Singleton<IWindowManager, WindowManager>()
-                .Singleton<IEventAggregator, EventAggregator>();
+                .Singleton<IEventAggregator, EventAggregator>()
+                .Singleton<IGameBoard, GameBoard>();
 
             GetType().Assembly.GetTypes()
                 .Where(type => type.IsClass)

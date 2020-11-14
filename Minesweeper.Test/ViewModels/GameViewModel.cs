@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using Minesweeper.BusinessLogic;
 using Minesweeper.Test.EventModels;
 using Minesweeper.Test.Models;
 using System.Threading;
@@ -20,15 +21,11 @@ namespace Minesweeper.Test.ViewModels
             }
         }
 
-        private double _windowHeght;
-
         public double WindowHeight
         {
             get { return _windowHeght; }
             set { _windowHeght = value; }
         }
-
-        private double _windowWidth;
 
         public double WindowWidth
         {
@@ -36,53 +33,22 @@ namespace Minesweeper.Test.ViewModels
             set { _windowWidth = value; }
         }
 
-        public GameViewModel(IEventAggregator events)
-        {
-            events.SubscribeOnPublishedThread(this);
+        private double _windowHeght;
+        private double _windowWidth;
+        private readonly IGameBoard _gameBoard;
 
-            Fields = new BindableCollection<FieldModel>
+        public GameViewModel(IEventAggregator events, IGameBoard gameBoard)
+        {
+            _gameBoard = gameBoard;
+            events.SubscribeOnPublishedThread(this);
+            Fields = new BindableCollection<FieldModel>();
+
+            _gameBoard.GenerateBoard(50, 50, 2);
+
+            foreach (var field in _gameBoard.Board)
             {
-                new FieldModel {Text = "a", IsEnabled = true},
-                new FieldModel {Text = "b", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true},
-                new FieldModel {Text = "", IsEnabled = true}
-            };
+                Fields.Add(new FieldModel { Text = field.Value.ToString(), IsEnabled = true });
+            }
         }
 
         public Task HandleAsync(WindowSizeChangedEvent message, CancellationToken cancellationToken)

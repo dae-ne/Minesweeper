@@ -2,13 +2,21 @@
 
 namespace Minesweeper.BusinessLogic
 {
-    public class GameBoard
+    public class GameBoard : IGameBoard
     {
-        public int[,] BoardValues { get; private set; }
+        public Model[,] Board { get; private set; }
 
         public void GenerateBoard(int rows, int columns, int mines)
         {
-            BoardValues = new int[rows, columns];
+            Board = new Model[rows, columns];
+
+            for (var row = 0; row < Board.GetLength(0); row++)
+            {
+                for (var column = 0; column < Board.GetLength(1); column++)
+                {
+                    Board[row, column] = new Model();
+                }
+            }
 
             for (var i = 0; i < mines; i++)
             {
@@ -18,20 +26,54 @@ namespace Minesweeper.BusinessLogic
             EvaluateFields(rows, columns);
         }
 
+        public void UncoverField(int row, int column)
+        {
+            Board[row, column].IsUncovered = true;
+        }
+
+        public void SetNextFlag(int row, int column)
+        {
+            if (Board[row, column].IsMarkedWithFlag)
+            {
+                Board[row, column].IsMarkedWithFlag = false;
+                Board[row, column].IsMarkedWithQuestionMark = true;
+            }
+
+            else if (Board[row, column].IsMarkedWithQuestionMark)
+            {
+                Board[row, column].IsMarkedWithFlag = false;
+                Board[row, column].IsMarkedWithQuestionMark = false;
+            }
+
+            else
+            {
+                Board[row, column].IsMarkedWithFlag = true;
+                Board[row, column].IsMarkedWithQuestionMark = false;
+            }
+        }
+
+        public bool IsFieldUncovered(int row, int column) => Board[row, column].IsUncovered;
+
+        public bool IsFieldMarkedWithFlag(int row, int column) => Board[row, column].IsMarkedWithFlag;
+
+        public bool IsFieldMarkedWithQuestionMark(int row, int column) => Board[row, column].IsMarkedWithQuestionMark;
+
         private bool AddMineToRandomPlace(int rows, int columns)
         {
             var rand = new Random();
             var row = rand.Next(0, rows);
             var column = rand.Next(0, columns);
-            
-            if (BoardValues != null && BoardValues[column, row] == -1)
+
+            if (Board != null && Board[row, column]?.Value == -1)
             {
                 return false;
             }
 
-            if (BoardValues != null)
-                BoardValues[row, column] = -1;
-            
+            if (Board != null)
+            {
+                Board[row, column].Value = -1;
+            }
+
             return true;
         }
 
@@ -41,7 +83,7 @@ namespace Minesweeper.BusinessLogic
             {
                 for (var column = 0; column < columns; column++)
                 {
-                    if (BoardValues[row, column] == -1)
+                    if (Board[row, column].Value == -1)
                     {
                         continue;
                     }
@@ -62,14 +104,14 @@ namespace Minesweeper.BusinessLogic
                                 j = 0;
                             }
 
-                            if (BoardValues[i, j] == -1)
+                            if (Board[i, j].Value == -1)
                             {
                                 counter++;
                             }
                         }
                     }
 
-                    BoardValues[row, column] = counter;
+                    Board[row, column].Value = counter;
                 }
             }
         }
