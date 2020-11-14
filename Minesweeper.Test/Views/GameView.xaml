@@ -4,11 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:cal="http://www.caliburnproject.org"
-             xmlns:local="clr-namespace:Minesweeper.Test.Views"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="500" Background="Red">
     <Grid>
-        <ItemsControl x:Name="Fields" Grid.Column="1">
+        <ItemsControl x:Name="Fields">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="10" Rows="10" />
@@ -19,7 +18,8 @@
                     <Button IsEnabled="{Binding IsEnabled}"
                             Content="{Binding Text}"
                             cal:Message.Attach="[Event PreviewMouseLeftButtonDown] = [Action DoSomething($this)];
-                                [Event PreviewMouseRightButtonDown] = [Action DoSomething($this)]" />
+                                [Event PreviewMouseRightButtonDown] = [Action DoSomething($this)]"
+                            d:DataContext="{d:DesignInstance }" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl> 

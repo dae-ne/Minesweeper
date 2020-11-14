@@ -8,8 +8,8 @@ namespace Minesweeper.Test.ViewModels
     class ShellViewModel : Conductor<object>, IHandle<StartGameEvent>
     {
         private readonly IEventAggregator _events;
-        private readonly GameViewModel _gameVM;
-        private readonly MenuViewModel _menuVM;
+        private readonly GameViewModel _gameViewModel;
+        private readonly MenuViewModel _menuViewModel;
 
         private double _windowHeight;
 
@@ -39,18 +39,24 @@ namespace Minesweeper.Test.ViewModels
             }
         }
 
-        public ShellViewModel(IEventAggregator events, GameViewModel gameVM, MenuViewModel menuVM)
+        public ShellViewModel(IEventAggregator events, GameViewModel gameViewModel, MenuViewModel menuViewModel)
         {
             _events = events;
-            _gameVM = gameVM;
-            _menuVM = menuVM;
-            ActivateItemAsync(_menuVM);
+            _gameViewModel = gameViewModel;
+            _menuViewModel = menuViewModel;
+            ActivateItemAsync(_menuViewModel);
             _events.SubscribeOnPublishedThread(this);
+        }
+
+        public sealed override Task ActivateItemAsync(object item,
+            CancellationToken cancellationToken = new CancellationToken())
+        {
+            return base.ActivateItemAsync(item, cancellationToken);
         }
 
         public async Task HandleAsync(StartGameEvent message, CancellationToken cancellationToken)
         {
-            await ActivateItemAsync(_gameVM);
+            await ActivateItemAsync(_gameViewModel);
         }
     }
 }

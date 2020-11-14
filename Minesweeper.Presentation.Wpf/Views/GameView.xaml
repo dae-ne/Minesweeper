@@ -5,7 +5,6 @@
                   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
                   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-                  xmlns:local="clr-namespace:Minesweeper.Presentation.Wpf"
                   mc:Ignorable="d" 
                   d:DesignHeight="450" d:DesignWidth="800"
                   Width="{Binding Width, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}, FallbackValue=500}">
@@ -30,7 +29,7 @@
                     <Button Height="50"
                             Width="50"
                             IsEnabled="{Binding IsEnabled}"
-                            Content="{Binding Text}">
+                            Content="{Binding Text}" d:DataContext="{d:DesignInstance }">
                         <Button.InputBindings>
                             <MouseBinding Command="{Binding DataContext.DoSomethingCommand,
                                                                 ElementName=WrapPanelOfFields}"

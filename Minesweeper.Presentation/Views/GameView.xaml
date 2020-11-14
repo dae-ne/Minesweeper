@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Minesweeper.Presentation.Views"
         xmlns:cal="http://www.caliburnproject.org"
         mc:Ignorable="d"
         Title="Minesweeper"
@@ -41,7 +40,8 @@
                             IsEnabled="{Binding IsEnabled}"
                             Content="{Binding Text}"
                             cal:Message.Attach="[Event PreviewMouseLeftButtonDown] = [Action DoSomething($this)];
-                                [Event PreviewMouseRightButtonDown] = [Action DoSomething($this)]" />
+                                [Event PreviewMouseRightButtonDown] = [Action DoSomething($this)]"
+                            d:DataContext="{d:DesignInstance }" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

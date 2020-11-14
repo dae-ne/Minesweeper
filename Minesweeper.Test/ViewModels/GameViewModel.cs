@@ -40,47 +40,49 @@ namespace Minesweeper.Test.ViewModels
         {
             events.SubscribeOnPublishedThread(this);
 
-            Fields = new BindableCollection<FieldModel>();
-            Fields.Add(new FieldModel { Text = "a", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "b", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
-            Fields.Add(new FieldModel { Text = "", IsEnabled = true });
+            Fields = new BindableCollection<FieldModel>
+            {
+                new FieldModel {Text = "a", IsEnabled = true},
+                new FieldModel {Text = "b", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true},
+                new FieldModel {Text = "", IsEnabled = true}
+            };
         }
 
         public Task HandleAsync(WindowSizeChangedEvent message, CancellationToken cancellationToken)
