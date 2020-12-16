@@ -2,6 +2,7 @@
 using Minesweeper.BusinessLogic;
 using Minesweeper.Test.EventModels;
 using Minesweeper.Test.Models;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -9,7 +10,23 @@ namespace Minesweeper.Test.ViewModels
 {
     class GameViewModel : Screen, IHandle<WindowSizeChangedEvent>, IHandle<StartGameEvent>
     {
+        private readonly IGameBoard _gameBoard;
         private BindableCollection<FieldModel> _fields;
+        private double _windowHeght;
+        private double _windowWidth;
+
+        public GameViewModel(IEventAggregator events, IGameBoard gameBoard)
+        {
+            _gameBoard = gameBoard;
+            events.SubscribeOnPublishedThread(this);
+            Fields = new BindableCollection<FieldModel>();
+            _gameBoard.GenerateBoard(10, 10, 10);
+
+            foreach (var field in _gameBoard.Board)
+            {
+                Fields.Add(new FieldModel(field));
+            }
+        }
 
         public BindableCollection<FieldModel> Fields
         {
@@ -33,40 +50,6 @@ namespace Minesweeper.Test.ViewModels
             set { _windowWidth = value; }
         }
 
-        private double _windowHeght;
-        private double _windowWidth;
-        private readonly IGameBoard _gameBoard;
-
-        public GameViewModel(IEventAggregator events, IGameBoard gameBoard)
-        {
-            _gameBoard = gameBoard;
-            events.SubscribeOnPublishedThread(this);
-            Fields = new BindableCollection<FieldModel>();
-
-            _gameBoard.GenerateBoard(10, 10, 10);
-
-            foreach (var field in _gameBoard.Board)
-            {
-                var value = "";
-
-                switch (field.Value)
-                {
-                    case FieldValues.Mine:
-                        value = "M";
-                        break;
-
-                    case FieldValues.Empty:
-                        break;
-
-                    default:
-                        value = ((int)field.Value).ToString();
-                        break;
-                }
-
-                Fields.Add(new FieldModel(field));
-            }
-        }
-
         public Task HandleAsync(WindowSizeChangedEvent message, CancellationToken cancellationToken)
         {
             WindowHeight = message.Height;
@@ -76,17 +59,20 @@ namespace Minesweeper.Test.ViewModels
 
         public Task HandleAsync(StartGameEvent message, CancellationToken cancellationToken)
         {
+            message.
             return Task.CompletedTask;
         }
 
-        public void DoSomething(FieldModel field)
+        public void FieldLeftClick(FieldModel field) => UpdateField(field, _gameBoard.UncoverField);
+
+        public void FieldRightClick(FieldModel field) => UpdateField(field, _gameBoard.SetNextStatus);
+
+        private void UpdateField(FieldModel field, Action<Model> action)
         {
-            field.LogicModel.
-            //var index = Fields.IndexOf(field);
-            //var value = field.LogicModel;
-            //Fields.RemoveAt(index);
-            //Fields.Insert(index, new FieldModel(value));
-            //NotifyOfPropertyChange(() => Fields);
+            var index = Fields.IndexOf(field);
+            action(field.LogicModel);
+            Fields.RemoveAt(index);
+            Fields.Insert(index, field);
         }
     }
 }

@@ -10,8 +10,17 @@ namespace Minesweeper.Test.ViewModels
         private readonly IEventAggregator _events;
         private readonly GameViewModel _gameViewModel;
         private readonly MenuViewModel _menuViewModel;
-
         private double _windowHeight;
+        private double _windowWidth;
+
+        public ShellViewModel(IEventAggregator events, GameViewModel gameViewModel, MenuViewModel menuViewModel)
+        {
+            _events = events;
+            _gameViewModel = gameViewModel;
+            _menuViewModel = menuViewModel;
+            ActivateItemAsync(_menuViewModel);
+            _events.SubscribeOnPublishedThread(this);
+        }
 
         public double WindowHeight
         {
@@ -25,8 +34,6 @@ namespace Minesweeper.Test.ViewModels
             }
         }
 
-        private double _windowWidth;
-
         public double WindowWidth
         {
             get { return _windowWidth; }
@@ -35,17 +42,8 @@ namespace Minesweeper.Test.ViewModels
                 _windowWidth = value;
                 NotifyOfPropertyChange(() => WindowWidth);
                 _events.PublishOnUIThreadAsync(
-                    new WindowSizeChangedEvent{ Height = WindowHeight, Width = WindowWidth });
+                    new WindowSizeChangedEvent { Height = WindowHeight, Width = WindowWidth });
             }
-        }
-
-        public ShellViewModel(IEventAggregator events, GameViewModel gameViewModel, MenuViewModel menuViewModel)
-        {
-            _events = events;
-            _gameViewModel = gameViewModel;
-            _menuViewModel = menuViewModel;
-            ActivateItemAsync(_menuViewModel);
-            _events.SubscribeOnPublishedThread(this);
         }
 
         public sealed override Task ActivateItemAsync(object item,

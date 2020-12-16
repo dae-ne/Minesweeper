@@ -19,8 +19,8 @@
                 <DataTemplate>
                     <Button IsEnabled="{Binding IsEnabled}"
                             Content="{Binding Text}"
-                            cal:Message.Attach="[Event PreviewMouseLeftButtonDown] = [Action DoSomething($this)];
-                                [Event PreviewMouseRightButtonDown] = [Action DoSomething($this)]"
+                            cal:Message.Attach="[Event PreviewMouseLeftButtonDown] = [Action FieldLeftClick($this)];
+                                [Event PreviewMouseRightButtonDown] = [Action FieldRightClick($this)]"
                             d:DataContext="{d:DesignInstance}" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

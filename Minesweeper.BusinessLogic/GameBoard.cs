@@ -33,32 +33,32 @@ namespace Minesweeper.BusinessLogic
             EvaluateFields(columns, rows);
         }
 
-        public FieldStatus GetStatus(in int columns, in int rows)
+        public FieldStatus GetStatus(Model model)
         {
-            return Board[rows, columns].Status;
+            return model.Status;
         }
 
-        public void UncoverField(in int columns, in int rows)
+        public void UncoverField(Model model)
         {
-            Board[rows, columns].Status = FieldStatus.Uncovered;
+            model.Status = FieldStatus.Uncovered;
         }
 
-        public void SetNextStatus(in int columns, in int rows)
+        public void SetNextStatus(Model model)
         {
-            var status = GetStatus(columns, rows);
+            var status = GetStatus(model);
 
             switch (status)
             {
                 case FieldStatus.Covered:
-                    Board[rows, columns].Status = FieldStatus.Flag;
+                    model.Status = FieldStatus.Flag;
                     break;
 
                 case FieldStatus.Flag:
-                    Board[rows, columns].Status = FieldStatus.QuestionMark;
+                    model.Status = FieldStatus.QuestionMark;
                     break;
 
                 case FieldStatus.QuestionMark:
-                    Board[rows, columns].Status = FieldStatus.Covered;
+                    model.Status = FieldStatus.Covered;
                     break;
             }    
         }
