@@ -2,7 +2,7 @@
 {
     public class Model
     {
-        public int Value { get; internal set; }
+        public FieldValues Value { get; internal set; }
         public FieldStatus Status { get; internal set; }
     }
 }

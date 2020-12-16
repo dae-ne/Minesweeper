@@ -43,11 +43,27 @@ namespace Minesweeper.Test.ViewModels
             events.SubscribeOnPublishedThread(this);
             Fields = new BindableCollection<FieldModel>();
 
-            _gameBoard.GenerateBoard(3, 3, 4);
+            _gameBoard.GenerateBoard(10, 10, 10);
 
             foreach (var field in _gameBoard.Board)
             {
-                //Fields.Add(new FieldModel { Text = field.Value.ToString(), IsEnabled = true });
+                var value = "";
+
+                switch (field.Value)
+                {
+                    case FieldValues.Mine:
+                        value = "M";
+                        break;
+
+                    case FieldValues.Empty:
+                        break;
+
+                    default:
+                        value = ((int)field.Value).ToString();
+                        break;
+                }
+
+                Fields.Add(new FieldModel(field, value));
             }
         }
 
@@ -66,8 +82,9 @@ namespace Minesweeper.Test.ViewModels
         public void DoSomething(FieldModel field)
         {
             var index = Fields.IndexOf(field);
+            var value = field.LogicModel;
             Fields.RemoveAt(index);
-            Fields.Insert(index, new FieldModel { Text = "1", IsEnabled = false });
+            Fields.Insert(index, new FieldModel(value, ""));
         }
     }
 }

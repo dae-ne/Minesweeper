@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace Minesweeper.BusinessLogic
 {
@@ -72,12 +71,12 @@ namespace Minesweeper.BusinessLogic
 
             try
             {
-                if (Board[row, column].Value == -1)
+                if (Board[row, column].Value == FieldValues.Mine)
                 {
                     return false;
                 }
 
-                Board[row, column].Value = -1;
+                Board[row, column].Value = FieldValues.Mine;
             }
             catch
             {
@@ -93,35 +92,35 @@ namespace Minesweeper.BusinessLogic
             {
                 for (var column = 0; column < columns; column++)
                 {
-                    if (Board[row, column].Value == -1)
+                    if (Board[row, column].Value == FieldValues.Mine)
                     {
                         continue;
                     }
 
                     var counter = 0;
 
-                    for (var y = row - 1; y < row + 1; y++)
+                    for (var y = row - 1; y <= row + 1; y++)
                     {
                         if (y < 0 || y >= columns)
                         {
                             continue;
                         }
 
-                        for (var x = column - 1; x < column + 1; x++)
+                        for (var x = column - 1; x <= column + 1; x++)
                         {
                             if (x < 0 || x >= columns)
                             {
                                 continue;
                             }
 
-                            if (Board[y, x].Value == -1)
+                            if (Board[y, x].Value == FieldValues.Mine)
                             {
                                 counter++;
                             }
                         }
                     }
 
-                    Board[row, column].Value = counter;
+                    Board[row, column].Value = (FieldValues)counter;
                 }
             }
         }
