@@ -63,7 +63,7 @@ namespace Minesweeper.Test.ViewModels
                         break;
                 }
 
-                Fields.Add(new FieldModel(field, value));
+                Fields.Add(new FieldModel(field));
             }
         }
 
@@ -81,10 +81,12 @@ namespace Minesweeper.Test.ViewModels
 
         public void DoSomething(FieldModel field)
         {
-            var index = Fields.IndexOf(field);
-            var value = field.LogicModel;
-            Fields.RemoveAt(index);
-            Fields.Insert(index, new FieldModel(value, ""));
+            field.LogicModel.
+            //var index = Fields.IndexOf(field);
+            //var value = field.LogicModel;
+            //Fields.RemoveAt(index);
+            //Fields.Insert(index, new FieldModel(value));
+            //NotifyOfPropertyChange(() => Fields);
         }
     }
 }
