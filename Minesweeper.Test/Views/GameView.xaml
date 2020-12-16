@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:cal="http://www.caliburnproject.org"
+             xmlns:viewmodels="clr-namespace:Minesweeper.Test.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:GameViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="500" Background="Red">
     <Grid>
@@ -19,7 +21,7 @@
                             Content="{Binding Text}"
                             cal:Message.Attach="[Event PreviewMouseLeftButtonDown] = [Action DoSomething($this)];
                                 [Event PreviewMouseRightButtonDown] = [Action DoSomething($this)]"
-                            d:DataContext="{d:DesignInstance }" />
+                            d:DataContext="{d:DesignInstance}" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl> 

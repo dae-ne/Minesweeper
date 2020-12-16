@@ -43,11 +43,11 @@ namespace Minesweeper.Test.ViewModels
             events.SubscribeOnPublishedThread(this);
             Fields = new BindableCollection<FieldModel>();
 
-            _gameBoard.GenerateBoard(50, 50, 2);
+            _gameBoard.GenerateBoard(3, 3, 4);
 
             foreach (var field in _gameBoard.Board)
             {
-                Fields.Add(new FieldModel { Text = field.Value.ToString(), IsEnabled = true });
+                //Fields.Add(new FieldModel { Text = field.Value.ToString(), IsEnabled = true });
             }
         }
 

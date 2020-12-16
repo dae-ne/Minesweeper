@@ -7,7 +7,7 @@
         Title="Minesweeper" MinHeight="400" MinWidth="400"
         Height="{Binding WindowHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
         Width="{Binding WindowWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-        d:DataContext="{d:DesignInstance }">
+        d:DataContext="{d:DesignInstance}">
     
     <Grid>
         <ContentControl x:Name="ActiveItem" />

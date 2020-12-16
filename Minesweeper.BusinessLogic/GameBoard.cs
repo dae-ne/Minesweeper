@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace Minesweeper.BusinessLogic
 {
@@ -6,13 +7,13 @@ namespace Minesweeper.BusinessLogic
     {
         public Model[,] Board { get; private set; }
 
-        public void GenerateBoard(int rows, int columns, int mines)
+        public void GenerateBoard(in int columns, in int rows, in int mines)
         {
             Board = new Model[rows, columns];
 
-            for (var row = 0; row < Board.GetLength(0); row++)
+            for (var row = 0; row < rows; row++)
             {
-                for (var column = 0; column < Board.GetLength(1); column++)
+                for (var column = 0; column < columns; column++)
                 {
                     Board[row, column] = new Model();
                 }
@@ -20,64 +21,73 @@ namespace Minesweeper.BusinessLogic
 
             for (var i = 0; i < mines; i++)
             {
-                while (!AddMineToRandomPlace(rows, columns)) { }
+                try
+                {
+                    while (!AddMineToRandomPlace(rows, columns)) { }
+                }
+                catch
+                {
+                    throw;
+                }
             }
 
-            EvaluateFields(rows, columns);
+            EvaluateFields(columns, rows);
         }
 
-        public void UncoverField(int row, int column)
+        public FieldStatus GetStatus(in int columns, in int rows)
         {
-            Board[row, column].IsUncovered = true;
+            return Board[rows, columns].Status;
         }
 
-        public void SetNextFlag(int row, int column)
+        public void UncoverField(in int columns, in int rows)
         {
-            if (Board[row, column].IsMarkedWithFlag)
-            {
-                Board[row, column].IsMarkedWithFlag = false;
-                Board[row, column].IsMarkedWithQuestionMark = true;
-            }
-
-            else if (Board[row, column].IsMarkedWithQuestionMark)
-            {
-                Board[row, column].IsMarkedWithFlag = false;
-                Board[row, column].IsMarkedWithQuestionMark = false;
-            }
-
-            else
-            {
-                Board[row, column].IsMarkedWithFlag = true;
-                Board[row, column].IsMarkedWithQuestionMark = false;
-            }
+            Board[rows, columns].Status = FieldStatus.Uncovered;
         }
 
-        public bool IsFieldUncovered(int row, int column) => Board[row, column].IsUncovered;
+        public void SetNextStatus(in int columns, in int rows)
+        {
+            var status = GetStatus(columns, rows);
 
-        public bool IsFieldMarkedWithFlag(int row, int column) => Board[row, column].IsMarkedWithFlag;
+            switch (status)
+            {
+                case FieldStatus.Covered:
+                    Board[rows, columns].Status = FieldStatus.Flag;
+                    break;
 
-        public bool IsFieldMarkedWithQuestionMark(int row, int column) => Board[row, column].IsMarkedWithQuestionMark;
+                case FieldStatus.Flag:
+                    Board[rows, columns].Status = FieldStatus.QuestionMark;
+                    break;
 
-        private bool AddMineToRandomPlace(int rows, int columns)
+                case FieldStatus.QuestionMark:
+                    Board[rows, columns].Status = FieldStatus.Covered;
+                    break;
+            }    
+        }
+
+        private bool AddMineToRandomPlace(in int columns, in int rows)
         {
             var rand = new Random();
             var row = rand.Next(0, rows);
             var column = rand.Next(0, columns);
 
-            if (Board != null && Board[row, column]?.Value == -1)
+            try
             {
-                return false;
-            }
+                if (Board[row, column].Value == -1)
+                {
+                    return false;
+                }
 
-            if (Board != null)
-            {
                 Board[row, column].Value = -1;
+            }
+            catch
+            {
+                throw;
             }
 
             return true;
         }
 
-        private void EvaluateFields(int rows, int columns)
+        private void EvaluateFields(in int columns, in int rows)
         {
             for (var row = 0; row < rows; row++)
             {
@@ -90,21 +100,21 @@ namespace Minesweeper.BusinessLogic
 
                     var counter = 0;
 
-                    for (var i = row - 1; i < row + 1; i++)
+                    for (var y = row - 1; y < row + 1; y++)
                     {
-                        if (i < 0)
+                        if (y < 0 || y >= columns)
                         {
-                            i = 0;
+                            continue;
                         }
 
-                        for (var j = column - 1; j < column + 1; j++)
+                        for (var x = column - 1; x < column + 1; x++)
                         {
-                            if (j < 0)
+                            if (x < 0 || x >= columns)
                             {
-                                j = 0;
+                                continue;
                             }
 
-                            if (Board[i, j].Value == -1)
+                            if (Board[y, x].Value == -1)
                             {
                                 counter++;
                             }

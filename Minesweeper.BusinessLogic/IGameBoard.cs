@@ -4,11 +4,9 @@
     {
         Model[,] Board { get; }
 
-        void GenerateBoard(int rows, int columns, int mines);
-        bool IsFieldMarkedWithFlag(int column, int row);
-        bool IsFieldMarkedWithQuestionMark(int column, int row);
-        bool IsFieldUncovered(int column, int row);
-        void SetNextFlag(int column, int row);
-        void UncoverField(int column, int row);
+        void GenerateBoard(in int columns, in int rows, in int mines);
+        FieldStatus GetStatus(in int columns, in int rows);
+        void SetNextStatus(in int columns, in int rows);
+        void UncoverField(in int columns, in int rows);
     }
 }
