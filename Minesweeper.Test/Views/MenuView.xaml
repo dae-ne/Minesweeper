@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:viewmodels="clr-namespace:Minesweeper.Test.ViewModels"
+             d:DataContext="{d:DesignInstance Type=viewmodels:MenuViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     
@@ -15,12 +17,12 @@
 
         <StackPanel Grid.Row="1">
             <TextBlock Text="Minesweeper" />
-            <Button Content="Easy" />
-            <Button Content="Medium" />
-            <Button Content="Hard" />
-            <Slider />
-            <Slider />
-            <Slider />
+            <Button x:Name="EasyModeBtClick" Content="Easy" />
+            <Button x:Name="MediumModeBtClick" Content="Medium" />
+            <Button x:Name="HardModeBtClick" Content="Hard" />
+            <Slider Value="{Binding BoardWidth, Mode=TwoWay}" />
+            <Slider Value="{Binding BoardHeight, Mode=TwoWay}" />
+            <Slider Value="{Binding NumberOfMines, Mode=TwoWay}" />
             <Button x:Name="StartGameBtClick" Content="Start game" />
         </StackPanel>
     </Grid>

@@ -24,7 +24,8 @@ namespace Minesweeper.Test
             _container
                 .Singleton<IWindowManager, WindowManager>()
                 .Singleton<IEventAggregator, EventAggregator>()
-                .Singleton<IGameBoard, GameBoard>();
+                .Singleton<IGameBoard, GameBoard>()
+                .Singleton<IBoardScanner, BoardScanner>();
 
             GetType().Assembly.GetTypes()
                 .Where(type => type.IsClass)

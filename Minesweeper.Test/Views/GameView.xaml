@@ -12,7 +12,7 @@
         <ItemsControl x:Name="Fields">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="10" Rows="10" />
+                    <UniformGrid Columns="{Binding BoardWidth}" Rows="{Binding BoardHeight}" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>

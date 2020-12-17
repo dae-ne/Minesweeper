@@ -3,6 +3,7 @@ using Minesweeper.BusinessLogic;
 using Minesweeper.Test.EventModels;
 using Minesweeper.Test.Models;
 using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -11,26 +12,24 @@ namespace Minesweeper.Test.ViewModels
     class GameViewModel : Screen, IHandle<WindowSizeChangedEvent>, IHandle<StartGameEvent>
     {
         private readonly IGameBoard _gameBoard;
+        private readonly IBoardScanner _scanner;
         private BindableCollection<FieldModel> _fields;
         private double _windowHeght;
         private double _windowWidth;
+        private int _boardHeight;
+        private int _boardWidth;
 
-        public GameViewModel(IEventAggregator events, IGameBoard gameBoard)
+        public GameViewModel(IEventAggregator events, IGameBoard gameBoard, IBoardScanner scanner)
         {
             _gameBoard = gameBoard;
+            _scanner = scanner;
             events.SubscribeOnPublishedThread(this);
             Fields = new BindableCollection<FieldModel>();
-            _gameBoard.GenerateBoard(10, 10, 10);
-
-            foreach (var field in _gameBoard.Board)
-            {
-                Fields.Add(new FieldModel(field));
-            }
         }
 
         public BindableCollection<FieldModel> Fields
         {
-            get { return _fields; }
+            get => _fields;
             set
             {
                 _fields = value;
@@ -40,14 +39,34 @@ namespace Minesweeper.Test.ViewModels
 
         public double WindowHeight
         {
-            get { return _windowHeght; }
+            get => _windowHeght;
             set { _windowHeght = value; }
         }
 
         public double WindowWidth
         {
-            get { return _windowWidth; }
+            get => _windowWidth;
             set { _windowWidth = value; }
+        }
+
+        public int BoardHeight
+        {
+            get => _boardHeight;
+            set
+            {
+                _boardHeight = value;
+                NotifyOfPropertyChange(() => BoardHeight);
+            }
+        }
+
+        public int BoardWidth
+        {
+            get => _boardWidth;
+            set
+            {
+                _boardWidth = value;
+                NotifyOfPropertyChange(() => BoardWidth);
+            }
         }
 
         public Task HandleAsync(WindowSizeChangedEvent message, CancellationToken cancellationToken)
@@ -59,11 +78,35 @@ namespace Minesweeper.Test.ViewModels
 
         public Task HandleAsync(StartGameEvent message, CancellationToken cancellationToken)
         {
-            message.
+            BoardHeight = message.BoardHeight;
+            BoardWidth = message.BoardWidth;
+            _gameBoard.GenerateBoard(BoardWidth, BoardHeight, message.NumberOfMines);
+
+            foreach (var field in _gameBoard.Board)
+            {
+                Fields.Add(new FieldModel(field));
+            }
+
             return Task.CompletedTask;
         }
 
-        public void FieldLeftClick(FieldModel field) => UpdateField(field, _gameBoard.UncoverField);
+        public void FieldLeftClick(FieldModel field)
+        {
+            UpdateField(field, _gameBoard.UncoverField);
+
+            if (field.LogicModel.Value == FieldValues.Empty)
+            {
+                var adjecentEmptyFields = _scanner.FindAdjacentEmpty(_gameBoard, field.LogicModel);
+
+                foreach (var emptyField in adjecentEmptyFields)
+                {
+                    var fieldModel = _fields
+                        .Where(e => e.LogicModel == emptyField)
+                        .FirstOrDefault();
+                    UpdateField(fieldModel, _gameBoard.UncoverField);
+                }
+            }
+        }
 
         public void FieldRightClick(FieldModel field) => UpdateField(field, _gameBoard.SetNextStatus);
 
