@@ -9,5 +9,8 @@
     <Color x:Key="MenuBtStartColor">Green</Color>
     <SolidColorBrush  x:Key="MenuBtBrush" Color="{StaticResource MenuBtColor}" />
     <SolidColorBrush  x:Key="MenuBtStartBrush" Color="{StaticResource MenuBtStartColor}" />
+    
+    <!--fonts-->
+    <FontFamily x:Key="DigitalSeven">pack://application:,,,/Resources/Fonts/#Digital-7</FontFamily>
 
 </ResourceDictionary>

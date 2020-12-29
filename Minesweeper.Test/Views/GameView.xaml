@@ -8,6 +8,10 @@
              d:DataContext="{d:DesignInstance Type=viewmodels:GameViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="500">
+
+    <UserControl.Resources>
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="5" />
@@ -18,28 +22,34 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="20" />
+            <RowDefinition Height="10" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="20" />
+            <RowDefinition Height="10" />
             <RowDefinition Height="*" />
             <RowDefinition Height="5" />
         </Grid.RowDefinitions>
 
-        <Menu Grid.ColumnSpan="100">
+        <Menu Grid.ColumnSpan="100" Background="Transparent">
+
+
             <MenuItem Header="_Game">
-                <MenuItem Header="_Open" />
-                <MenuItem Header="_Close" />
-                <MenuItem Header="_Save" />
+                <MenuItem Header="_Start Over" />
+                <MenuItem Header="_New Game">
+                    <MenuItem Header="_Easy" />
+                    <MenuItem Header="_Medium" />
+                    <MenuItem Header="_Hard" />
+                </MenuItem>
+                <MenuItem Header="_Main Menu"/>
+                <MenuItem Header="_Quit" />
             </MenuItem>
-            <MenuItem Header="_Help">
-                <MenuItem Header="_Open" />
-                <MenuItem Header="_Close" />
-                <MenuItem Header="_Save" />
+            <MenuItem Header="_Info">
+                <MenuItem Header="_Instruction"/>
+                <MenuItem Header="_About" />
             </MenuItem>
         </Menu>
 
-        <TextBlock Grid.Column="1" Grid.Row="2" Text="Mines remaining: 10" TextAlignment="Center" />
-        <TextBlock Grid.Column="3" Grid.Row="2" Text="Time: 100" TextAlignment="Center" />
+        <TextBlock FontFamily="{StaticResource DigitalSeven}" FontSize="70" Grid.Column="1" Grid.Row="2" Text="010" TextAlignment="Center" />
+        <TextBlock FontFamily="{StaticResource DigitalSeven}" FontSize="70" Grid.Column="3" Grid.Row="2" Text="100" TextAlignment="Center" />
 
         <ItemsControl Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" x:Name="Fields">
             <ItemsControl.ItemsPanel>
