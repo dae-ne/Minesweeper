@@ -47,7 +47,6 @@ namespace Minesweeper.BusinessLogic
             {
                 if (board.Board[y, x].Value == FieldValues.Empty)
                 {
-                    //board.UncoverField(board.Board[y, x]);
                     emptyFields.Add(board.Board[y, x]);
 
                     for (var v = y - 1; v <= y + 1; v++)
