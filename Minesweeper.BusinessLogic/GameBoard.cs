@@ -35,11 +35,13 @@ namespace Minesweeper.BusinessLogic
 
         public FieldStatus GetStatus(Model model)
         {
+            //TODO
             return model.Status;
         }
 
         public void UncoverField(Model model)
         {
+            //TODO
             model.Status = FieldStatus.Uncovered;
         }
 

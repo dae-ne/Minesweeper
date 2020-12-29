@@ -4,10 +4,20 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:viewmodels="clr-namespace:Minesweeper.Test.ViewModels"
+             xmlns:System="clr-namespace:System;assembly=mscorlib"
              d:DataContext="{d:DesignInstance Type=viewmodels:MenuViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    
+
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="../ResourceDictionaries/MenuButtonDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <System:Double x:Key="ButtonHeight">30</System:Double>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
@@ -15,15 +25,39 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <StackPanel Grid.Row="1">
-            <TextBlock Text="Minesweeper" />
-            <Button x:Name="EasyModeBtClick" Content="Easy" />
-            <Button x:Name="MediumModeBtClick" Content="Medium" />
-            <Button x:Name="HardModeBtClick" Content="Hard" />
-            <Slider Value="{Binding BoardWidth, Mode=TwoWay}" />
-            <Slider Value="{Binding BoardHeight, Mode=TwoWay}" />
-            <Slider Value="{Binding NumberOfMines, Mode=TwoWay}" />
-            <Button x:Name="StartGameBtClick" Content="Start game" />
+        <StackPanel Grid.Row="1" MaxWidth="600">
+            <TextBlock FontSize="40" Text="Minesweeper" HorizontalAlignment="Center" Margin="0 0 0 30" />
+            <Button x:Name="EasyModeBtClick" Content="Easy" Margin="5" Height="{StaticResource ButtonHeight}" Style="{StaticResource MenuBtEasyStyle}" />
+            <Button x:Name="MediumModeBtClick" Content="Medium" Margin="5" Height="{StaticResource ButtonHeight}" Style="{StaticResource MenuBtMediumStyle}" />
+            <Button x:Name="HardModeBtClick" Content="Hard" Margin="5" Height="{StaticResource ButtonHeight}" Style="{StaticResource MenuBtHardStyle}" />
+
+            <Grid Margin="0 10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="30" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <TextBlock Grid.Row="0" TextAlignment="Right" Margin="5 0" Text="Columns:" />
+                <TextBlock Grid.Row="1" TextAlignment="Right" Margin="5 0" Text="Rows:" />
+                <TextBlock Grid.Row="2" TextAlignment="Right" Margin="5 0" Text="Mines:" />
+
+                <Slider Grid.Column="1" Grid.Row="0" Value="{Binding BoardWidth, Mode=TwoWay}" />
+                <Slider Grid.Column="1" Grid.Row="1" Value="{Binding BoardHeight, Mode=TwoWay}" />
+                <Slider Grid.Column="1" Grid.Row="2" Value="{Binding NumberOfMines, Mode=TwoWay}" />
+
+                <TextBlock Grid.Column="2" Grid.Row="0" Text="20" TextAlignment="Center" />
+                <TextBlock Grid.Column="2" Grid.Row="1" Text="30" TextAlignment="Center" />
+                <TextBlock Grid.Column="2" Grid.Row="2" Text="40" TextAlignment="Center" />
+
+            </Grid>
+            
+            <Button x:Name="StartGameBtClick" Content="Start game" Margin="5" Height="50" Style="{StaticResource MenuBtStartStyle}" />
         </StackPanel>
     </Grid>
 </UserControl>
