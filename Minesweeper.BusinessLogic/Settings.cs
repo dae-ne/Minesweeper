@@ -10,8 +10,8 @@
         public const int MaxNumberOfRows = 30;
         public const int MaxNumberOfMines = 89;
 
-        public const int LevelEasyColumns = 8;
-        public const int LevelEasyRows = 8;
+        public const int LevelEasyColumns = 9;
+        public const int LevelEasyRows = 9;
         public const int LevelEasyMines = 10;
 
         public const int LevelMediumColumns = 16;
