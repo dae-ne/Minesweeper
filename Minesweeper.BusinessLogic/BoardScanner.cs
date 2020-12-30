@@ -16,7 +16,7 @@ namespace Minesweeper.BusinessLogic
             return Find(board, position.Value.X, position.Value.Y);
         }
 
-        /// <returns>null when board does not contain the model</returns>
+        /// <returns>null when the board does not contain the model</returns>
         private (int X, int Y)? FindPosition(IGameBoard board, Model model)
         {
             var boardHeight = board.Board.GetLength(0);

@@ -35,7 +35,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="30" />
+                    <ColumnDefinition Width="20" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -51,9 +51,9 @@
                 <Slider Grid.Column="1" Grid.Row="1" Value="{Binding BoardHeight, Mode=TwoWay}" />
                 <Slider Grid.Column="1" Grid.Row="2" Value="{Binding NumberOfMines, Mode=TwoWay}" />
 
-                <TextBlock Grid.Column="2" Grid.Row="0" Text="20" TextAlignment="Center" />
-                <TextBlock Grid.Column="2" Grid.Row="1" Text="30" TextAlignment="Center" />
-                <TextBlock Grid.Column="2" Grid.Row="2" Text="40" TextAlignment="Center" />
+                <TextBlock Grid.Column="2" Grid.Row="0" Text="{Binding BoardWidth}" TextAlignment="Center" />
+                <TextBlock Grid.Column="2" Grid.Row="1" Text="{Binding BoardHeight}" TextAlignment="Center" />
+                <TextBlock Grid.Column="2" Grid.Row="2" Text="{Binding NumberOfMines}" TextAlignment="Center" />
 
             </Grid>
             

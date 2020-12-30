@@ -11,6 +11,7 @@ namespace Minesweeper.Test.ViewModels
 {
     class GameViewModel : Screen, IHandle<WindowSizeChangedEvent>, IHandle<StartGameEvent>
     {
+        private readonly IEventAggregator _events;
         private readonly IGameBoard _gameBoard;
         private readonly IBoardScanner _scanner;
         private BindableCollection<FieldModel> _fields;
@@ -18,9 +19,11 @@ namespace Minesweeper.Test.ViewModels
         private double _windowWidth;
         private int _boardHeight;
         private int _boardWidth;
+        private int _numberOfMines;
 
         public GameViewModel(IEventAggregator events, IGameBoard gameBoard, IBoardScanner scanner)
         {
+            _events = events;
             _gameBoard = gameBoard;
             _scanner = scanner;
             events.SubscribeOnPublishedThread(this);
@@ -69,6 +72,16 @@ namespace Minesweeper.Test.ViewModels
             }
         }
 
+        public async Task StartOverMenuClick()
+        {
+            await _events.PublishOnUIThreadAsync(new StartGameEvent
+            {
+                BoardHeight = this.BoardHeight,
+                BoardWidth = this.BoardWidth,
+                NumberOfMines = _numberOfMines
+            });
+        }
+
         public Task HandleAsync(WindowSizeChangedEvent message, CancellationToken cancellationToken)
         {
             WindowHeight = message.Height;
@@ -80,7 +93,9 @@ namespace Minesweeper.Test.ViewModels
         {
             BoardHeight = message.BoardHeight;
             BoardWidth = message.BoardWidth;
-            _gameBoard.GenerateBoard(BoardWidth, BoardHeight, message.NumberOfMines);
+            _numberOfMines = message.NumberOfMines;
+            _gameBoard.GenerateBoard(BoardWidth, BoardHeight, _numberOfMines);
+            Fields.Clear();
 
             foreach (var field in _gameBoard.Board)
             {

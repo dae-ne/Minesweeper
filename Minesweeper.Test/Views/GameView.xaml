@@ -30,10 +30,8 @@
         </Grid.RowDefinitions>
 
         <Menu Grid.ColumnSpan="100" Background="Transparent">
-
-
             <MenuItem Header="_Game">
-                <MenuItem Header="_Start Over" />
+                <MenuItem x:Name="StartOverMenuClick" Header="_Start Over" />
                 <MenuItem Header="_New Game">
                     <MenuItem Header="_Easy" />
                     <MenuItem Header="_Medium" />

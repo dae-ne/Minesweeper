@@ -22,7 +22,7 @@ namespace Minesweeper.BusinessLogic
             {
                 try
                 {
-                    while (!AddMineToRandomPlace(rows, columns)) { }
+                    while (!AddMineToRandomPlace(columns, rows)) { }
                 }
                 catch
                 {
@@ -103,7 +103,7 @@ namespace Minesweeper.BusinessLogic
 
                     for (var y = row - 1; y <= row + 1; y++)
                     {
-                        if (y < 0 || y >= columns)
+                        if (y < 0 || y >= rows)
                         {
                             continue;
                         }
