@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Minesweeper.Test.ViewModels
 {
-    class ShellViewModel : Conductor<object>, IHandle<StartGameEvent>
+    class ShellViewModel : Conductor<object>, IHandle<StartGameEvent>, IHandle<OpenMenuEvent>
     {
         private readonly IEventAggregator _events;
         private readonly GameViewModel _gameViewModel;
@@ -55,6 +55,11 @@ namespace Minesweeper.Test.ViewModels
         public async Task HandleAsync(StartGameEvent message, CancellationToken cancellationToken)
         {
             await ActivateItemAsync(_gameViewModel);
+        }
+
+        public async Task HandleAsync(OpenMenuEvent message, CancellationToken cancellationToken)
+        {
+            await ActivateItemAsync(_menuViewModel);
         }
     }
 }

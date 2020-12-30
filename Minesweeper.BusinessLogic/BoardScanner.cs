@@ -28,7 +28,7 @@ namespace Minesweeper.BusinessLogic
                 {
                     if (board.Board[y, x].Equals(model))
                     {
-                        return (y, x);
+                        return (x, y);
                     }
                 }
             }

@@ -82,6 +82,16 @@ namespace Minesweeper.Test.ViewModels
             });
         }
 
+        public async Task OpenMenuMenuClick()
+        {
+            await _events.PublishOnUIThreadAsync(new OpenMenuEvent());
+        }
+
+        public void QuitMenuClick()
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
+
         public Task HandleAsync(WindowSizeChangedEvent message, CancellationToken cancellationToken)
         {
             WindowHeight = message.Height;

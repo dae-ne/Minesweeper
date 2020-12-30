@@ -14,11 +14,11 @@
     
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="2" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="40" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="2" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -26,7 +26,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="10" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="5" />
+            <RowDefinition Height="2" />
         </Grid.RowDefinitions>
 
         <Menu Grid.ColumnSpan="100" Background="Transparent">
@@ -37,8 +37,8 @@
                     <MenuItem Header="_Medium" />
                     <MenuItem Header="_Hard" />
                 </MenuItem>
-                <MenuItem Header="_Main Menu"/>
-                <MenuItem Header="_Quit" />
+                <MenuItem x:Name="OpenMenuMenuClick" Header="_Main Menu"/>
+                <MenuItem x:Name="QuitMenuClick" Header="_Quit" />
             </MenuItem>
             <MenuItem Header="_Info">
                 <MenuItem Header="_Instruction"/>
