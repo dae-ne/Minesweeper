@@ -82,6 +82,36 @@ namespace Minesweeper.Test.ViewModels
             });
         }
 
+        public async Task NewGameEasyMenuClick()
+        {
+            await _events.PublishOnUIThreadAsync(new StartGameEvent
+            {
+                BoardHeight = Settings.LevelEasyRows,
+                BoardWidth = Settings.LevelEasyColumns,
+                NumberOfMines = Settings.LevelEasyMines
+            });
+        }
+
+        public async Task NewGameMediumMenuClick()
+        {
+            await _events.PublishOnUIThreadAsync(new StartGameEvent
+            {
+                BoardHeight = Settings.LevelMediumRows,
+                BoardWidth = Settings.LevelMediumColumns,
+                NumberOfMines = Settings.LevelMediumMines
+            });
+        }
+
+        public async Task NewGameHardMenuClick()
+        {
+            await _events.PublishOnUIThreadAsync(new StartGameEvent
+            {
+                BoardHeight = Settings.LevelHardRows,
+                BoardWidth = Settings.LevelHardColumns,
+                NumberOfMines = Settings.LevelHardMines
+            });
+        }
+
         public async Task OpenMenuMenuClick()
         {
             await _events.PublishOnUIThreadAsync(new OpenMenuEvent());

@@ -33,12 +33,16 @@
             <MenuItem Header="_Game">
                 <MenuItem x:Name="StartOverMenuClick" Header="_Start Over" />
                 <MenuItem Header="_New Game">
-                    <MenuItem Header="_Easy" />
-                    <MenuItem Header="_Medium" />
-                    <MenuItem Header="_Hard" />
+                    <MenuItem x:Name="NewGameEasyMenuClick" Header="_Easy" />
+                    <MenuItem x:Name="NewGameMediumMenuClick" Header="_Medium" />
+                    <MenuItem x:Name="NewGameHardMenuClick" Header="_Hard" />
                 </MenuItem>
                 <MenuItem x:Name="OpenMenuMenuClick" Header="_Main Menu"/>
                 <MenuItem x:Name="QuitMenuClick" Header="_Quit" />
+            </MenuItem>
+            <MenuItem Header="_View">
+                <MenuItem Header="_Window"/>
+                <MenuItem Header="_Full Screen" />
             </MenuItem>
             <MenuItem Header="_Info">
                 <MenuItem Header="_Instruction"/>

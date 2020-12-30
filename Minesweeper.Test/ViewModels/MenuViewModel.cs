@@ -1,4 +1,5 @@
 ﻿using Caliburn.Micro;
+using Minesweeper.BusinessLogic;
 using Minesweeper.Test.EventModels;
 using System.Threading.Tasks;
 
@@ -14,6 +15,9 @@ namespace Minesweeper.Test.ViewModels
         public MenuViewModel(IEventAggregator events)
         {
             _events = events;
+            BoardHeight = MinNumberOfRows;
+            BoardWidth = MinNumberOfColumns;
+            NumberOfMines = MinNumberOfMines;
         }
 
         public int BoardHeight
@@ -41,30 +45,39 @@ namespace Minesweeper.Test.ViewModels
             get => _numberOfMines;
             set
             {
-                _numberOfMines = value;
+                var max = BoardHeight * BoardWidth;
+                _numberOfMines = value >= max ? max : value; 
                 NotifyOfPropertyChange(() => NumberOfMines);
             }
         }
 
+        public int MinNumberOfColumns => Settings.MinNumberOfColumns;
+        public int MinNumberOfRows => Settings.MinNumberOfRows;
+        public int MinNumberOfMines => Settings.MinNumberOfMines;
+
+        public int MaxNumberOfColumns => Settings.MaxNumberOfColumns;
+        public int MaxNumberOfRows => Settings.MaxNumberOfRows;
+        public int MaxNumberOfMines => Settings.MaxNumberOfMines;
+
         public void EasyModeBtClick()
         {
-            BoardHeight = 3;
-            BoardWidth = 3;
-            NumberOfMines = 3;
+            BoardHeight = Settings.LevelEasyRows;
+            BoardWidth = Settings.LevelEasyColumns;
+            NumberOfMines = Settings.LevelEasyMines;
         }
 
         public void MediumModeBtClick()
         {
-            BoardHeight = 6;
-            BoardWidth = 6;
-            NumberOfMines = 6;
+            BoardHeight = Settings.LevelMediumRows;
+            BoardWidth = Settings.LevelMediumColumns;
+            NumberOfMines = Settings.LevelMediumMines;
         }
 
         public void HardModeBtClick()
         {
-            BoardHeight = 9;
-            BoardWidth = 9;
-            NumberOfMines = 9;
+            BoardHeight = Settings.LevelHardRows;
+            BoardWidth = Settings.LevelHardColumns;
+            NumberOfMines = Settings.LevelHardMines;
         }
 
         public async Task StartGameBtClick()
