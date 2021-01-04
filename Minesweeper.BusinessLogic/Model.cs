@@ -1,8 +1,9 @@
 ﻿namespace Minesweeper.BusinessLogic
 {
-    public class Model
+    // TODO: Change model references to interface
+    public class Model : IModel
     {
-        public FieldValues Value { get; internal set; }
-        public FieldStatus Status { get; internal set; }
+        public FieldValues Value { get; set; }
+        public FieldStatus Status { get; set; }
     }
 }

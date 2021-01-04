@@ -15,10 +15,12 @@ namespace Minesweeper.Test.ViewModels
         private readonly IGameBoard _gameBoard;
         private readonly IBoardScanner _scanner;
         private BindableCollection<FieldModel> _fields;
-        private double _windowHeght;
+        private double _windowHeight;
         private double _windowWidth;
-        private int _boardHeight;
-        private int _boardWidth;
+        private double _boardHeight;
+        private double _boardWidth;
+        private int _boardRows;
+        private int _boardColumns;
         private int _numberOfMines;
 
         public GameViewModel(IEventAggregator events, IGameBoard gameBoard, IBoardScanner scanner)
@@ -42,8 +44,8 @@ namespace Minesweeper.Test.ViewModels
 
         public double WindowHeight
         {
-            get => _windowHeght;
-            set { _windowHeght = value; }
+            get => _windowHeight;
+            set { _windowHeight = value; }
         }
 
         public double WindowWidth
@@ -52,23 +54,43 @@ namespace Minesweeper.Test.ViewModels
             set { _windowWidth = value; }
         }
 
-        public int BoardHeight
+        public double BoardHeight
         {
             get => _boardHeight;
             set
             {
                 _boardHeight = value;
-                NotifyOfPropertyChange(() => BoardHeight);
+                NotifyOfPropertyChange(() => Fields);
             }
         }
-
-        public int BoardWidth
+        
+        public double BoardWidth
         {
             get => _boardWidth;
             set
             {
                 _boardWidth = value;
-                NotifyOfPropertyChange(() => BoardWidth);
+                NotifyOfPropertyChange(() => Fields);
+            }
+        }
+
+        public int BoardRows
+        {
+            get => _boardRows;
+            set
+            {
+                _boardRows = value;
+                NotifyOfPropertyChange(() => BoardRows);
+            }
+        }
+
+        public int BoardColumns
+        {
+            get => _boardColumns;
+            set
+            {
+                _boardColumns = value;
+                NotifyOfPropertyChange(() => BoardColumns);
             }
         }
 
@@ -76,8 +98,8 @@ namespace Minesweeper.Test.ViewModels
         {
             await _events.PublishOnUIThreadAsync(new StartGameEvent
             {
-                BoardHeight = this.BoardHeight,
-                BoardWidth = this.BoardWidth,
+                BoardHeight = this.BoardRows,
+                BoardWidth = this.BoardColumns,
                 NumberOfMines = _numberOfMines
             });
         }
@@ -131,10 +153,10 @@ namespace Minesweeper.Test.ViewModels
 
         public Task HandleAsync(StartGameEvent message, CancellationToken cancellationToken)
         {
-            BoardHeight = message.BoardHeight;
-            BoardWidth = message.BoardWidth;
+            BoardRows = message.BoardHeight;
+            BoardColumns = message.BoardWidth;
             _numberOfMines = message.NumberOfMines;
-            _gameBoard.GenerateBoard(BoardWidth, BoardHeight, _numberOfMines);
+            _gameBoard.GenerateBoard(BoardColumns, BoardRows, _numberOfMines);
             Fields.Clear();
 
             foreach (var field in _gameBoard.Board)
@@ -149,14 +171,14 @@ namespace Minesweeper.Test.ViewModels
         {
             UpdateField(field, _gameBoard.UncoverField);
 
-            if (field.LogicModel.Value == FieldValues.Empty)
+            if (field.Value == FieldValues.Empty)
             {
-                var adjecentEmptyFields = _scanner.FindAdjacentEmpty(_gameBoard, field.LogicModel);
+                var adjecentEmptyFields = _scanner.FindAdjacentEmpty(_gameBoard, field.Original);
 
                 foreach (var emptyField in adjecentEmptyFields)
                 {
                     var fieldModel = _fields
-                        .Where(e => e.LogicModel == emptyField)
+                        .Where(e => e.Compare(emptyField))
                         .FirstOrDefault();
                     UpdateField(fieldModel, _gameBoard.UncoverField);
                 }
@@ -165,10 +187,10 @@ namespace Minesweeper.Test.ViewModels
 
         public void FieldRightClick(FieldModel field) => UpdateField(field, _gameBoard.SetNextStatus);
 
-        private void UpdateField(FieldModel field, Action<Model> action)
+        private void UpdateField(FieldModel field, Action<IModel> action)
         {
             var index = Fields.IndexOf(field);
-            action(field.LogicModel);
+            action(field);
             Fields.RemoveAt(index);
             Fields.Insert(index, field);
         }

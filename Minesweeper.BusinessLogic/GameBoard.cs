@@ -33,19 +33,19 @@ namespace Minesweeper.BusinessLogic
             EvaluateFields(columns, rows);
         }
 
-        public FieldStatus GetStatus(Model model)
+        public FieldStatus GetStatus(IModel model)
         {
             //TODO
             return model.Status;
         }
 
-        public void UncoverField(Model model)
+        public void UncoverField(IModel model)
         {
             //TODO
             model.Status = FieldStatus.Uncovered;
         }
 
-        public void SetNextStatus(Model model)
+        public void SetNextStatus(IModel model)
         {
             var status = GetStatus(model);
 

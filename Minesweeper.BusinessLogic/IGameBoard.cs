@@ -5,8 +5,8 @@
         Model[,] Board { get; }
 
         void GenerateBoard(in int columns, in int rows, in int mines);
-        FieldStatus GetStatus(Model model);
-        void SetNextStatus(Model model);
-        void UncoverField(Model model);
+        FieldStatus GetStatus(IModel model);
+        void SetNextStatus(IModel model);
+        void UncoverField(IModel model);
     }
 }

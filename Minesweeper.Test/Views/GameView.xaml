@@ -56,7 +56,7 @@
         <ItemsControl Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" x:Name="Fields">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
-                    <UniformGrid Columns="{Binding BoardWidth}" Rows="{Binding BoardHeight}" />
+                    <UniformGrid Columns="{Binding BoardColumns}" Rows="{Binding BoardRows}" />
                 </ItemsPanelTemplate>
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
