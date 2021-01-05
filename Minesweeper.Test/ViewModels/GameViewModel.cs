@@ -187,6 +187,7 @@ namespace Minesweeper.Test.ViewModels
 
         public void FieldRightClick(FieldModel field) => UpdateField(field, _gameBoard.SetNextStatus);
 
+        // TODO: IModel!
         private void UpdateField(FieldModel field, Action<IModel> action)
         {
             var index = Fields.IndexOf(field);

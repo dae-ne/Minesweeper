@@ -47,12 +47,12 @@
                 <TextBlock Grid.Row="1" TextAlignment="Right" Margin="5 0" Text="Rows:" />
                 <TextBlock Grid.Row="2" TextAlignment="Right" Margin="5 0" Text="Mines:" />
 
-                <Slider Minimum="{Binding MinNumberOfColumns}" Maximum="{Binding MaxNumberOfColumns}" Grid.Column="1" Grid.Row="0" Value="{Binding BoardWidth, Mode=TwoWay}" />
-                <Slider Minimum="{Binding MinNumberOfRows}" Maximum="{Binding MaxNumberOfRows}" Grid.Column="1" Grid.Row="1" Value="{Binding BoardHeight, Mode=TwoWay}" />
+                <Slider Minimum="{Binding MinNumberOfColumns}" Maximum="{Binding MaxNumberOfColumns}" Grid.Column="1" Grid.Row="0" Value="{Binding BoardColumns, Mode=TwoWay}" />
+                <Slider Minimum="{Binding MinNumberOfRows}" Maximum="{Binding MaxNumberOfRows}" Grid.Column="1" Grid.Row="1" Value="{Binding BoardRows, Mode=TwoWay}" />
                 <Slider Minimum="{Binding MinNumberOfMines}" Maximum="{Binding MaxNumberOfMines}" Grid.Column="1" Grid.Row="2" Value="{Binding NumberOfMines, Mode=TwoWay}" />
 
-                <TextBlock Grid.Column="2" Grid.Row="0" Text="{Binding BoardWidth}" TextAlignment="Center" />
-                <TextBlock Grid.Column="2" Grid.Row="1" Text="{Binding BoardHeight}" TextAlignment="Center" />
+                <TextBlock Grid.Column="2" Grid.Row="0" Text="{Binding BoardColumns}" TextAlignment="Center" />
+                <TextBlock Grid.Column="2" Grid.Row="1" Text="{Binding BoardRows}" TextAlignment="Center" />
                 <TextBlock Grid.Column="2" Grid.Row="2" Text="{Binding NumberOfMines}" TextAlignment="Center" />
 
             </Grid>

@@ -8,35 +8,35 @@ namespace Minesweeper.Test.ViewModels
     class MenuViewModel : PropertyChangedBase
     {
         private readonly IEventAggregator _events;
-        private int _boardHeight;
-        private int _boardWidth;
+        private int _boardRows;
+        private int _boardColumns;
         private int _numberOfMines;
 
         public MenuViewModel(IEventAggregator events)
         {
             _events = events;
-            BoardHeight = MinNumberOfRows;
-            BoardWidth = MinNumberOfColumns;
+            BoardRows = MinNumberOfRows;
+            BoardColumns = MinNumberOfColumns;
             NumberOfMines = MinNumberOfMines;
         }
 
-        public int BoardHeight
+        public int BoardRows
         {
-            get => _boardHeight;
+            get => _boardRows;
             set
             {
-                _boardHeight = value;
-                NotifyOfPropertyChange(() => BoardHeight);
+                _boardRows = value;
+                NotifyOfPropertyChange(() => BoardRows);
             }
         }
 
-        public int BoardWidth
+        public int BoardColumns
         {
-            get => _boardWidth;
+            get => _boardColumns;
             set
             {
-                _boardWidth = value;
-                NotifyOfPropertyChange(() => BoardWidth);
+                _boardColumns = value;
+                NotifyOfPropertyChange(() => BoardColumns);
             }
         }
 
@@ -45,7 +45,7 @@ namespace Minesweeper.Test.ViewModels
             get => _numberOfMines;
             set
             {
-                var max = BoardHeight * BoardWidth;
+                var max = BoardRows * BoardColumns;
                 _numberOfMines = value >= max ? max : value; 
                 NotifyOfPropertyChange(() => NumberOfMines);
             }
@@ -61,22 +61,22 @@ namespace Minesweeper.Test.ViewModels
 
         public void EasyModeBtClick()
         {
-            BoardHeight = Settings.LevelEasyRows;
-            BoardWidth = Settings.LevelEasyColumns;
+            BoardRows = Settings.LevelEasyRows;
+            BoardColumns = Settings.LevelEasyColumns;
             NumberOfMines = Settings.LevelEasyMines;
         }
 
         public void MediumModeBtClick()
         {
-            BoardHeight = Settings.LevelMediumRows;
-            BoardWidth = Settings.LevelMediumColumns;
+            BoardRows = Settings.LevelMediumRows;
+            BoardColumns = Settings.LevelMediumColumns;
             NumberOfMines = Settings.LevelMediumMines;
         }
 
         public void HardModeBtClick()
         {
-            BoardHeight = Settings.LevelHardRows;
-            BoardWidth = Settings.LevelHardColumns;
+            BoardRows = Settings.LevelHardRows;
+            BoardColumns = Settings.LevelHardColumns;
             NumberOfMines = Settings.LevelHardMines;
         }
 
@@ -84,8 +84,8 @@ namespace Minesweeper.Test.ViewModels
         {
             await _events.PublishOnUIThreadAsync(new StartGameEvent
             {
-                BoardHeight = this.BoardHeight,
-                BoardWidth = this.BoardWidth,
+                BoardHeight = this.BoardRows,
+                BoardWidth = this.BoardColumns,
                 NumberOfMines = this.NumberOfMines
             });
         }
