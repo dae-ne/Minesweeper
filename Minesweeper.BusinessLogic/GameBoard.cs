@@ -4,17 +4,18 @@ namespace Minesweeper.BusinessLogic
 {
     public class GameBoard : IGameBoard
     {
-        public Model[,] Board { get; private set; }
+        public IModel[,] Board { get; private set; }
 
         public void GenerateBoard(in int columns, in int rows, in int mines)
         {
             Board = new Model[rows, columns];
+            int counter = 1;
 
             for (var row = 0; row < rows; row++)
             {
                 for (var column = 0; column < columns; column++)
                 {
-                    Board[row, column] = new Model();
+                    Board[row, column] = new Model(counter++);
                 }
             }
 
@@ -33,10 +34,28 @@ namespace Minesweeper.BusinessLogic
             EvaluateFields(columns, rows);
         }
 
-        public FieldStatus GetStatus(IModel model)
+        /// <returns>null when the board does not contain the model</returns>
+        public (int X, int Y)? GetPosition(IGameBoard board, IModel model)
         {
-            //TODO
-            return model.Status;
+            var boardHeight = board.Board.GetLength(0);
+            var boardWidth = board.Board.GetLength(1);
+            var position = model.Id - 1;
+
+            if (position >= 0 && position < boardHeight * boardWidth)
+            {
+                try
+                {
+                    var posY = position / boardWidth;
+                    var posX = position % boardHeight;
+                    return (posX, posY);
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+
+            return null;
         }
 
         public void UncoverField(IModel model)

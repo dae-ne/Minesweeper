@@ -4,6 +4,6 @@ namespace Minesweeper.BusinessLogic
 {
     public interface IBoardScanner
     {
-        IEnumerable<Model> FindAdjacentEmpty(IGameBoard board, Model model);
+        IEnumerable<IModel> FindAdjacentEmpty(IGameBoard board, IModel model);
     }
 }

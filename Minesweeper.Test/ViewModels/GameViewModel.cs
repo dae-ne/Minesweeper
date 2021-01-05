@@ -173,12 +173,12 @@ namespace Minesweeper.Test.ViewModels
 
             if (field.Value == FieldValues.Empty)
             {
-                var adjecentEmptyFields = _scanner.FindAdjacentEmpty(_gameBoard, field.Original);
+                var adjecentEmptyFields = _scanner.FindAdjacentEmpty(_gameBoard, field);
 
                 foreach (var emptyField in adjecentEmptyFields)
                 {
                     var fieldModel = _fields
-                        .Where(e => e.Compare(emptyField))
+                        .Where(e => e.Id == emptyField.Id)
                         .FirstOrDefault();
                     UpdateField(fieldModel, _gameBoard.UncoverField);
                 }

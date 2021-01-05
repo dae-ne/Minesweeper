@@ -5,23 +5,25 @@ namespace Minesweeper.Test.Models
     // TODO: Create more properties that return values from the logic model
     class FieldModel : IModel
     {
-        public FieldModel(Model logicModel)
+        private readonly IModel _logicModel;
+
+        public FieldModel(IModel logicModel)
         {
-            Original = logicModel;
+            _logicModel = logicModel;
         }
 
-        public Model Original { get; }
+        public int Id => _logicModel.Id;
 
         public FieldStatus Status
         {
-            get => Original.Status;
-            set => Original.Status = value;
+            get => _logicModel.Status;
+            set => _logicModel.Status = value;
         }
 
         public FieldValues Value
         {
-            get => Original.Value;
-            set => Original.Value = value;
+            get => _logicModel.Value;
+            set => _logicModel.Value = value;
         }
 
         // TODO: Change property name to "Content". It should contain an image
@@ -29,25 +31,25 @@ namespace Minesweeper.Test.Models
         {
             get
             {
-                if (Original.Status == FieldStatus.Covered)
+                if (_logicModel.Status == FieldStatus.Covered)
                 {
                     return "";
                 }
-                else if (Original.Status == FieldStatus.Flag)
+                else if (_logicModel.Status == FieldStatus.Flag)
                 {
                     return "F";
                 }
-                else if (Original.Status == FieldStatus.QuestionMark)
+                else if (_logicModel.Status == FieldStatus.QuestionMark)
                 {
                     return "?";
                 }
-                else if (Original.Status == FieldStatus.Uncovered)
+                else if (_logicModel.Status == FieldStatus.Uncovered)
                 {
-                    return Original.Value switch
+                    return _logicModel.Value switch
                     {
                         FieldValues.Mine => "M",
                         FieldValues.Empty => "",
-                        _ => ((int)Original.Value).ToString(),
+                        _ => ((int)_logicModel.Value).ToString(),
                     };
                 }
 
@@ -55,8 +57,6 @@ namespace Minesweeper.Test.Models
             }
         }
 
-        public bool IsEnabled => Original.Status != FieldStatus.Uncovered;
-
-        public bool Compare(Model model) => Original == model;
+        public bool IsEnabled => _logicModel.Status != FieldStatus.Uncovered;
     }
 }

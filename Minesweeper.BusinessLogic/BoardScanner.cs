@@ -4,43 +4,43 @@ namespace Minesweeper.BusinessLogic
 {
     public class BoardScanner : IBoardScanner
     {
-        public IEnumerable<Model> FindAdjacentEmpty(IGameBoard board, Model model)
+        public IEnumerable<IModel> FindAdjacentEmpty(IGameBoard board, IModel model)
         {
-            var position = FindPosition(board, model);
+            var position = board.GetPosition(board, model);
 
             if (position == null)
             {
-                return new List<Model>();
+                return new List<IModel>();
             }
 
             return Find(board, position.Value.X, position.Value.Y);
         }
 
         /// <returns>null when the board does not contain the model</returns>
-        private (int X, int Y)? FindPosition(IGameBoard board, Model model)
-        {
-            var boardHeight = board.Board.GetLength(0);
-            var boardWidth = board.Board.GetLength(1);
+        //private (int X, int Y)? FindPosition(IGameBoard board, IModel model)
+        //{
+        //    var boardHeight = board.Board.GetLength(0);
+        //    var boardWidth = board.Board.GetLength(1);
 
-            for (var y = 0; y < boardHeight; y++)
-            {
-                for (var x = 0; x < boardWidth; x++)
-                {
-                    if (board.Board[y, x].Equals(model))
-                    {
-                        return (x, y);
-                    }
-                }
-            }
+        //    for (var y = 0; y < boardHeight; y++)
+        //    {
+        //        for (var x = 0; x < boardWidth; x++)
+        //        {
+        //            if (board.Board[y, x].Equals(model))
+        //            {
+        //                return (x, y);
+        //            }
+        //        }
+        //    }
 
-            return null;
-        }
+        //    return null;
+        //}
 
-        private IEnumerable<Model> Find(IGameBoard board, int x, int y, HashSet<Model> emptyFields = null)
+        private IEnumerable<IModel> Find(IGameBoard board, int x, int y, HashSet<IModel> emptyFields = null)
         {
             if (emptyFields == null)
             {
-                emptyFields = new HashSet<Model>();
+                emptyFields = new HashSet<IModel>();
             }
 
             if (x >= 0 && y >= 0 && x < board.Board.GetLength(1) && y < board.Board.GetLength(0))
