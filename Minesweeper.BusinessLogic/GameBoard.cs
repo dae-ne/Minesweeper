@@ -41,15 +41,12 @@ namespace Minesweeper.BusinessLogic
 
         public void UncoverField(IModel model)
         {
-            //TODO
             model.Status = FieldStatus.Uncovered;
         }
 
         public void SetNextStatus(IModel model)
         {
-            var status = GetStatus(model);
-
-            switch (status)
+            switch (model.Status)
             {
                 case FieldStatus.Covered:
                     model.Status = FieldStatus.Flag;

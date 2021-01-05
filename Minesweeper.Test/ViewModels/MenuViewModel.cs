@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Minesweeper.Test.ViewModels
 {
-    class MenuViewModel : Screen
+    class MenuViewModel : PropertyChangedBase
     {
         private readonly IEventAggregator _events;
         private int _boardHeight;
