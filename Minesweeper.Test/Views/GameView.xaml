@@ -50,8 +50,8 @@
             </MenuItem>
         </Menu>
 
-        <TextBlock FontFamily="{StaticResource DigitalSeven}" FontSize="70" Grid.Column="1" Grid.Row="2" Text="010" TextAlignment="Center" />
-        <TextBlock FontFamily="{StaticResource DigitalSeven}" FontSize="70" Grid.Column="3" Grid.Row="2" Text="100" TextAlignment="Center" />
+        <TextBlock FontFamily="{StaticResource DigitalSeven}" FontSize="70" Grid.Column="1" Grid.Row="2" Text="000" TextAlignment="Center" />
+        <TextBlock FontFamily="{StaticResource DigitalSeven}" FontSize="70" Grid.Column="3" Grid.Row="2" Text="{Binding InGameTime, FallbackValue=000}" TextAlignment="Center" />
 
         <ItemsControl Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" x:Name="Fields">
             <ItemsControl.ItemsPanel>

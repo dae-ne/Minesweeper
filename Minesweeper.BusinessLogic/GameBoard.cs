@@ -46,7 +46,7 @@ namespace Minesweeper.BusinessLogic
                 try
                 {
                     var posY = position / boardWidth;
-                    var posX = position % boardHeight;
+                    var posX = position % boardWidth;
                     return (posX, posY);
                 }
                 catch

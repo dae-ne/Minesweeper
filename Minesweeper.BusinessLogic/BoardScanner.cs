@@ -16,26 +16,6 @@ namespace Minesweeper.BusinessLogic
             return Find(board, position.Value.X, position.Value.Y);
         }
 
-        /// <returns>null when the board does not contain the model</returns>
-        //private (int X, int Y)? FindPosition(IGameBoard board, IModel model)
-        //{
-        //    var boardHeight = board.Board.GetLength(0);
-        //    var boardWidth = board.Board.GetLength(1);
-
-        //    for (var y = 0; y < boardHeight; y++)
-        //    {
-        //        for (var x = 0; x < boardWidth; x++)
-        //        {
-        //            if (board.Board[y, x].Equals(model))
-        //            {
-        //                return (x, y);
-        //            }
-        //        }
-        //    }
-
-        //    return null;
-        //}
-
         private IEnumerable<IModel> Find(IGameBoard board, int x, int y, HashSet<IModel> emptyFields = null)
         {
             if (emptyFields == null)

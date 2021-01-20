@@ -3,9 +3,11 @@ using Minesweeper.BusinessLogic;
 using Minesweeper.Test.EventModels;
 using Minesweeper.Test.Models;
 using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Minesweeper.Test.ViewModels
 {
@@ -22,6 +24,9 @@ namespace Minesweeper.Test.ViewModels
         private int _boardRows;
         private int _boardColumns;
         private int _numberOfMines;
+        private Stopwatch _stopwatch;
+        private bool _gameStarted = false;
+        private bool _gameFinished = false;
 
         public GameViewModel(IEventAggregator events, IGameBoard gameBoard, IBoardScanner scanner)
         {
@@ -30,6 +35,7 @@ namespace Minesweeper.Test.ViewModels
             _scanner = scanner;
             events.SubscribeOnPublishedThread(this);
             Fields = new BindableCollection<FieldModel>();
+            _stopwatch = new Stopwatch();
         }
 
         public BindableCollection<FieldModel> Fields
@@ -63,7 +69,7 @@ namespace Minesweeper.Test.ViewModels
                 NotifyOfPropertyChange(() => Fields);
             }
         }
-        
+
         public double BoardWidth
         {
             get => _boardWidth;
@@ -91,6 +97,24 @@ namespace Minesweeper.Test.ViewModels
             {
                 _boardColumns = value;
                 NotifyOfPropertyChange(() => BoardColumns);
+            }
+        }
+
+        public string InGameTime
+        {
+            get
+            {
+                var timeAsStr = _stopwatch.Elapsed.Seconds.ToString();
+
+                for (var i = 0; i < 3; i++)
+                {
+                    if (timeAsStr.Length < 3)
+                    {
+                        timeAsStr = "0" + timeAsStr;
+                    }
+                }
+
+                return timeAsStr;
             }
         }
 
@@ -153,6 +177,7 @@ namespace Minesweeper.Test.ViewModels
 
         public Task HandleAsync(StartGameEvent message, CancellationToken cancellationToken)
         {
+            ResetGame();
             BoardRows = message.BoardHeight;
             BoardColumns = message.BoardWidth;
             _numberOfMines = message.NumberOfMines;
@@ -169,23 +194,40 @@ namespace Minesweeper.Test.ViewModels
 
         public void FieldLeftClick(FieldModel field)
         {
+            _ = StartGame();
             UpdateField(field, _gameBoard.UncoverField);
+
+            switch (field.Value)
+            {
+                case FieldValues.Empty:
+                    var adjecentEmptyFields = _scanner.FindAdjacentEmpty(_gameBoard, field);
+
+                    foreach (var emptyField in adjecentEmptyFields)
+                    {
+                        var fieldModel = _fields
+                            .Where(e => e.Id == emptyField.Id)
+                            .FirstOrDefault();
+                        UpdateField(fieldModel, _gameBoard.UncoverField);
+                    }
+
+                    break;
+
+                case FieldValues.Mine:
+                    EndGame(false);
+                    break;
+            }
 
             if (field.Value == FieldValues.Empty)
             {
-                var adjecentEmptyFields = _scanner.FindAdjacentEmpty(_gameBoard, field);
 
-                foreach (var emptyField in adjecentEmptyFields)
-                {
-                    var fieldModel = _fields
-                        .Where(e => e.Id == emptyField.Id)
-                        .FirstOrDefault();
-                    UpdateField(fieldModel, _gameBoard.UncoverField);
-                }
             }
         }
 
-        public void FieldRightClick(FieldModel field) => UpdateField(field, _gameBoard.SetNextStatus);
+        public void FieldRightClick(FieldModel field)
+        {
+            _ = StartGame();
+            UpdateField(field, _gameBoard.SetNextStatus);
+        }
 
         // TODO: IModel!
         private void UpdateField(FieldModel field, Action<IModel> action)
@@ -194,6 +236,42 @@ namespace Minesweeper.Test.ViewModels
             action(field);
             Fields.RemoveAt(index);
             Fields.Insert(index, field);
+        }
+
+        private async Task StartGame()
+        {
+            if (!_gameStarted)
+            {
+                _gameStarted = true;
+                _stopwatch.Restart();
+
+                while (!_gameFinished)
+                {
+                    await Task.Delay(1000);
+                    NotifyOfPropertyChange(() => InGameTime);
+                }
+            }
+        }
+
+        private void EndGame(bool win)
+        {
+            if (!_gameFinished)
+            {
+                _gameFinished = true;
+                _stopwatch.Stop();
+
+                var message = win ? "You won!" : "Boooooooom!";
+                MessageBox.Show(message);
+            }
+        }
+
+        private void ResetGame()
+        {
+            _gameStarted = false;
+            _gameFinished = false;
+
+            _stopwatch.Restart();
+            _stopwatch.Stop();
         }
     }
 }
