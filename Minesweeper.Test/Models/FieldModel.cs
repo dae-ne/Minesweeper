@@ -2,7 +2,6 @@
 
 namespace Minesweeper.Test.Models
 {
-    // TODO: Create more properties that return values from the logic model
     class FieldModel : IModel
     {
         private readonly IModel _logicModel;

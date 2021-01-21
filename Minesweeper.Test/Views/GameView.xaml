@@ -11,7 +11,7 @@
 
     <UserControl.Resources>
     </UserControl.Resources>
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2" />
@@ -50,7 +50,7 @@
             </MenuItem>
         </Menu>
 
-        <TextBlock FontFamily="{StaticResource DigitalSeven}" FontSize="70" Grid.Column="1" Grid.Row="2" Text="000" TextAlignment="Center" />
+        <TextBlock FontFamily="{StaticResource DigitalSeven}" FontSize="70" Grid.Column="1" Grid.Row="2" Text="{Binding GameScore, FallbackValue=000}" TextAlignment="Center" />
         <TextBlock FontFamily="{StaticResource DigitalSeven}" FontSize="70" Grid.Column="3" Grid.Row="2" Text="{Binding InGameTime, FallbackValue=000}" TextAlignment="Center" />
 
         <ItemsControl Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" x:Name="Fields">
@@ -68,6 +68,6 @@
                             d:DataContext="{d:DesignInstance}" />
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
-        </ItemsControl> 
+        </ItemsControl>
     </Grid>
 </UserControl>

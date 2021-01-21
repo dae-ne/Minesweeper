@@ -100,22 +100,14 @@ namespace Minesweeper.Test.ViewModels
             }
         }
 
+        public string GameScore
+        {
+            get => GetStatsStringValue(_gameBoard.Score);
+        }
+
         public string InGameTime
         {
-            get
-            {
-                var timeAsStr = _stopwatch.Elapsed.Seconds.ToString();
-
-                for (var i = 0; i < 3; i++)
-                {
-                    if (timeAsStr.Length < 3)
-                    {
-                        timeAsStr = "0" + timeAsStr;
-                    }
-                }
-
-                return timeAsStr;
-            }
+            get => GetStatsStringValue((int)_stopwatch.Elapsed.TotalSeconds);
         }
 
         public async Task StartOverMenuClick()
@@ -182,6 +174,7 @@ namespace Minesweeper.Test.ViewModels
             BoardColumns = message.BoardWidth;
             _numberOfMines = message.NumberOfMines;
             _gameBoard.GenerateBoard(BoardColumns, BoardRows, _numberOfMines);
+            NotifyOfPropertyChange(() => GameScore);
             Fields.Clear();
 
             foreach (var field in _gameBoard.Board)
@@ -216,20 +209,15 @@ namespace Minesweeper.Test.ViewModels
                     EndGame(false);
                     break;
             }
-
-            if (field.Value == FieldValues.Empty)
-            {
-
-            }
         }
 
         public void FieldRightClick(FieldModel field)
         {
             _ = StartGame();
             UpdateField(field, _gameBoard.SetNextStatus);
+            NotifyOfPropertyChange(() => GameScore);
         }
 
-        // TODO: IModel!
         private void UpdateField(FieldModel field, Action<IModel> action)
         {
             var index = Fields.IndexOf(field);
@@ -260,7 +248,7 @@ namespace Minesweeper.Test.ViewModels
                 _gameFinished = true;
                 _stopwatch.Stop();
 
-                var message = win ? "You won!" : "Boooooooom!";
+                var message = win ? $"Congratulations, your time: {InGameTime} s" : "Boooooooom!";
                 MessageBox.Show(message);
             }
         }
@@ -272,6 +260,23 @@ namespace Minesweeper.Test.ViewModels
 
             _stopwatch.Restart();
             _stopwatch.Stop();
+
+            NotifyOfPropertyChange(() => InGameTime);
+        }
+
+        private string GetStatsStringValue(int value)
+        {
+            var valueAsString = value.ToString();
+
+            for (var i = 0; i < 3; i++)
+            {
+                if (valueAsString.Length < 3)
+                {
+                    valueAsString = "0" + valueAsString;
+                }
+            }
+
+            return valueAsString;
         }
     }
 }

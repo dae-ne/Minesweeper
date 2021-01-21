@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace Minesweeper.BusinessLogic
 {
@@ -13,10 +14,35 @@ namespace Minesweeper.BusinessLogic
                 return new List<IModel>();
             }
 
-            return Find(board, position.Value.X, position.Value.Y);
+            var emptyAdjecentFields = Find(board, position.Value.X, position.Value.Y);
+
+            // Adding all fields around empty adjecent
+            var adjecentWithValue = new HashSet<IModel>();
+
+            foreach (var field in emptyAdjecentFields)
+            {
+                var fieldPosition = board.GetPosition(board, field);
+
+                for (var v = fieldPosition.Value.Y - 1; v <= fieldPosition.Value.Y + 1; v++)
+                {
+                    for (var h = fieldPosition.Value.X - 1; h <= fieldPosition.Value.X + 1; h++)
+                    {
+                        if (h >= 0
+                            && v >= 0
+                            && h < board.Board.GetLength(1)
+                            && v < board.Board.GetLength(0))
+                        {
+                            adjecentWithValue.Add(board.Board[v, h]);
+                        }
+                    }
+                }
+            }
+
+            emptyAdjecentFields.UnionWith(adjecentWithValue);
+            return emptyAdjecentFields;
         }
 
-        private IEnumerable<IModel> Find(IGameBoard board, int x, int y, HashSet<IModel> emptyFields = null)
+        private HashSet<IModel> Find(IGameBoard board, int x, int y, HashSet<IModel> emptyFields = null)
         {
             if (emptyFields == null)
             {

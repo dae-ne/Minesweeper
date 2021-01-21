@@ -6,8 +6,11 @@ namespace Minesweeper.BusinessLogic
     {
         public IModel[,] Board { get; private set; }
 
+        public int Score { get; private set; }
+
         public void GenerateBoard(in int columns, in int rows, in int mines)
         {
+            Score = mines;
             Board = new Model[rows, columns];
             int counter = 1;
 
@@ -69,10 +72,12 @@ namespace Minesweeper.BusinessLogic
             {
                 case FieldStatus.Covered:
                     model.Status = FieldStatus.Flag;
+                    Score--;
                     break;
 
                 case FieldStatus.Flag:
                     model.Status = FieldStatus.QuestionMark;
+                    Score++;
                     break;
 
                 case FieldStatus.QuestionMark:
