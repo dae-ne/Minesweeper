@@ -157,7 +157,7 @@ namespace Minesweeper.Test.ViewModels
 
         public void QuitMenuClick()
         {
-            System.Windows.Application.Current.Shutdown();
+            Application.Current.Shutdown();
         }
 
         public Task HandleAsync(WindowSizeChangedEvent message, CancellationToken cancellationToken)
@@ -188,25 +188,19 @@ namespace Minesweeper.Test.ViewModels
         public void FieldLeftClick(FieldModel field)
         {
             _ = StartGame();
-            UpdateField(field, _gameBoard.UncoverField);
+            var uncoverStatus = _gameBoard.UncoverField(field);
+            UpdateField(field);
 
-            switch (field.Value)
+            switch (uncoverStatus)
             {
-                case FieldValues.Empty:
-                    var adjecentEmptyFields = _scanner.FindAdjacentEmpty(_gameBoard, field);
-
-                    foreach (var emptyField in adjecentEmptyFields)
-                    {
-                        var fieldModel = _fields
-                            .Where(e => e.Id == emptyField.Id)
-                            .FirstOrDefault();
-                        UpdateField(fieldModel, _gameBoard.UncoverField);
-                    }
-
+                case UncoverStatus.EmptyField:
+                    HandleEmptyFieldClick(field);
                     break;
-
-                case FieldValues.Mine:
+                case UncoverStatus.Mine:
                     EndGame(false);
+                    break;
+                case UncoverStatus.Win:
+                    EndGame(true);
                     break;
             }
         }
@@ -214,14 +208,28 @@ namespace Minesweeper.Test.ViewModels
         public void FieldRightClick(FieldModel field)
         {
             _ = StartGame();
-            UpdateField(field, _gameBoard.SetNextStatus);
+            _gameBoard.SetNextStatus(field);
+            UpdateField(field);
             NotifyOfPropertyChange(() => GameScore);
         }
 
-        private void UpdateField(FieldModel field, Action<IModel> action)
+        private void HandleEmptyFieldClick(FieldModel field)
+        {
+            var adjecentEmptyFields = _scanner.FindAdjacentEmpty(_gameBoard, field);
+
+            foreach (var emptyField in adjecentEmptyFields)
+            {
+                var fieldModel = _fields
+                    .Where(e => e.Id == emptyField.Id)
+                    .FirstOrDefault();
+                _gameBoard.UncoverField(fieldModel);
+                UpdateField(fieldModel);
+            }
+        }
+
+        private void UpdateField(FieldModel field)
         {
             var index = Fields.IndexOf(field);
-            action(field);
             Fields.RemoveAt(index);
             Fields.Insert(index, field);
         }

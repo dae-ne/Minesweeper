@@ -4,6 +4,9 @@ namespace Minesweeper.BusinessLogic
 {
     public class GameBoard : IGameBoard
     {
+        private int _uncovered = 0;
+        private int _uncoveredToWin = 0;
+
         public IModel[,] Board { get; private set; }
 
         public int Score { get; private set; }
@@ -12,6 +15,8 @@ namespace Minesweeper.BusinessLogic
         {
             Score = mines;
             Board = new Model[rows, columns];
+            _uncoveredToWin = mines;
+            _uncovered = columns * rows;
             int counter = 1;
 
             for (var row = 0; row < rows; row++)
@@ -61,9 +66,31 @@ namespace Minesweeper.BusinessLogic
             return null;
         }
 
-        public void UncoverField(IModel model)
+        public UncoverStatus UncoverField(IModel model)
         {
-            model.Status = FieldStatus.Uncovered;
+            if (model.Status != FieldStatus.Uncovered && model.Status != FieldStatus.Flag)
+            {
+                model.Status = FieldStatus.Uncovered;
+
+                if (model.Value == FieldValues.Mine)
+                {
+                    return UncoverStatus.Mine;
+                }
+                if (--_uncovered <= _uncoveredToWin)
+                {
+                    return UncoverStatus.Win;
+                }
+                if (model.Value == FieldValues.Empty)
+                {
+                    return UncoverStatus.EmptyField;
+                }
+
+                return UncoverStatus.Normal;
+            }
+            else
+            {
+                return UncoverStatus.NoUncover;
+            }
         }
 
         public void SetNextStatus(IModel model)
