@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="Minesweeper" MinHeight="400" MinWidth="400"
-        Height="{Binding WindowHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-        Width="{Binding WindowWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+        Title="Minesweeper"
+        MinHeight="{Binding WindowHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+        MinWidth="{Binding WindowWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+        Height="400" Width="400"
         d:DataContext="{d:DesignInstance}">
     
     <Grid>

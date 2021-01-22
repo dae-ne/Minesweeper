@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Minesweeper.Test.ViewModels
 {
-    class ShellViewModel : Conductor<object>, IHandle<StartGameEvent>, IHandle<OpenMenuEvent>
+    class ShellViewModel : Conductor<object>, IHandle<StartGameEvent>, IHandle<OpenMenuEvent>, IHandle<WindowSizeChangeEvent>
     {
         private readonly IEventAggregator _events;
         private readonly GameViewModel _gameViewModel;
@@ -24,25 +24,21 @@ namespace Minesweeper.Test.ViewModels
 
         public double WindowHeight
         {
-            get { return _windowHeight; }
+            get => _windowHeight;
             set
             {
                 _windowHeight = value;
                 NotifyOfPropertyChange(() => WindowHeight);
-                _events.PublishOnUIThreadAsync(
-                    new WindowSizeChangedEvent { Height = WindowHeight, Width = WindowWidth });
             }
         }
 
         public double WindowWidth
         {
-            get { return _windowWidth; }
+            get => _windowWidth;
             set
             {
                 _windowWidth = value;
                 NotifyOfPropertyChange(() => WindowWidth);
-                _events.PublishOnUIThreadAsync(
-                    new WindowSizeChangedEvent { Height = WindowHeight, Width = WindowWidth });
             }
         }
 
@@ -59,7 +55,16 @@ namespace Minesweeper.Test.ViewModels
 
         public async Task HandleAsync(OpenMenuEvent message, CancellationToken cancellationToken)
         {
+            WindowHeight = 400.0;
+            WindowWidth = 400.0;
             await ActivateItemAsync(_menuViewModel);
+        }
+
+        public Task HandleAsync(WindowSizeChangeEvent message, CancellationToken cancellationToken)
+        {
+            WindowHeight = message.Height;
+            WindowWidth = message.Width;
+            return Task.CompletedTask;
         }
     }
 }

@@ -29,7 +29,7 @@
             <RowDefinition Height="2" />
         </Grid.RowDefinitions>
 
-        <Menu Grid.ColumnSpan="100" Background="Transparent">
+        <Menu Grid.ColumnSpan="100" Background="Transparent" Height="18">
             <MenuItem Header="_Game">
                 <MenuItem x:Name="StartOverMenuClick" Header="_Start Over" />
                 <MenuItem Header="_New Game">
@@ -53,7 +53,7 @@
         <TextBlock FontFamily="{StaticResource DigitalSeven}" FontSize="70" Grid.Column="1" Grid.Row="2" Text="{Binding GameScore, FallbackValue=000}" TextAlignment="Center" />
         <TextBlock FontFamily="{StaticResource DigitalSeven}" FontSize="70" Grid.Column="3" Grid.Row="2" Text="{Binding InGameTime, FallbackValue=000}" TextAlignment="Center" />
 
-        <ItemsControl Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3" x:Name="Fields">
+        <ItemsControl ItemsSource="{Binding Fields}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="3">
             <ItemsControl.ItemsPanel>
                 <ItemsPanelTemplate>
                     <UniformGrid Columns="{Binding BoardColumns}" Rows="{Binding BoardRows}" />
@@ -61,8 +61,7 @@
             </ItemsControl.ItemsPanel>
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
-                    <Button IsEnabled="{Binding IsEnabled}"
-                            Content="{Binding Text}"
+                    <Button IsEnabled="{Binding IsEnabled}" Content="{Binding Text}"
                             cal:Message.Attach="[Event PreviewMouseLeftButtonDown] = [Action FieldLeftClick($this)];
                                 [Event PreviewMouseRightButtonDown] = [Action FieldRightClick($this)]"
                             d:DataContext="{d:DesignInstance}" />

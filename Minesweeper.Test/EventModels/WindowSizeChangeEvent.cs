@@ -1,6 +1,6 @@
 ﻿namespace Minesweeper.Test.EventModels
 {
-    class WindowSizeChangedEvent
+    class WindowSizeChangeEvent
     {
         public double Height { get; set; }
         public double Width { get; set; }

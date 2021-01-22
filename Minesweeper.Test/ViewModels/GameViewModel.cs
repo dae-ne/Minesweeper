@@ -2,23 +2,21 @@
 using Minesweeper.BusinessLogic;
 using Minesweeper.Test.EventModels;
 using Minesweeper.Test.Models;
-using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Minesweeper.Test.ViewModels
 {
-    class GameViewModel : Screen, IHandle<WindowSizeChangedEvent>, IHandle<StartGameEvent>
+    class GameViewModel : Screen, IHandle<StartGameEvent>
     {
         private readonly IEventAggregator _events;
         private readonly IGameBoard _gameBoard;
         private readonly IBoardScanner _scanner;
         private BindableCollection<FieldModel> _fields;
-        private double _windowHeight;
-        private double _windowWidth;
         private double _boardHeight;
         private double _boardWidth;
         private int _boardRows;
@@ -48,17 +46,22 @@ namespace Minesweeper.Test.ViewModels
             }
         }
 
-        public double WindowHeight
-        {
-            get => _windowHeight;
-            set { _windowHeight = value; }
-        }
+        //public double WindowHeight
+        //{
+        //    get => _windowHeight;
+        //    set { _windowHeight = value; }
+        //}
 
-        public double WindowWidth
-        {
-            get => _windowWidth;
-            set { _windowWidth = value; }
-        }
+        //public double WindowWidth
+        //{
+        //    get => _windowWidth;
+        //    set { _windowWidth = value; }
+        //}
+
+        //public double 
+        //{
+        //    get => GameBoardControl;
+        //}
 
         public double BoardHeight
         {
@@ -118,6 +121,8 @@ namespace Minesweeper.Test.ViewModels
                 BoardWidth = this.BoardColumns,
                 NumberOfMines = _numberOfMines
             });
+
+            await ChangeWindowMinSize();
         }
 
         public async Task NewGameEasyMenuClick()
@@ -128,6 +133,8 @@ namespace Minesweeper.Test.ViewModels
                 BoardWidth = Settings.LevelEasyColumns,
                 NumberOfMines = Settings.LevelEasyMines
             });
+
+            await ChangeWindowMinSize();
         }
 
         public async Task NewGameMediumMenuClick()
@@ -138,6 +145,8 @@ namespace Minesweeper.Test.ViewModels
                 BoardWidth = Settings.LevelMediumColumns,
                 NumberOfMines = Settings.LevelMediumMines
             });
+
+            await ChangeWindowMinSize();
         }
 
         public async Task NewGameHardMenuClick()
@@ -148,6 +157,8 @@ namespace Minesweeper.Test.ViewModels
                 BoardWidth = Settings.LevelHardColumns,
                 NumberOfMines = Settings.LevelHardMines
             });
+
+            await ChangeWindowMinSize();
         }
 
         public async Task OpenMenuMenuClick()
@@ -160,14 +171,14 @@ namespace Minesweeper.Test.ViewModels
             Application.Current.Shutdown();
         }
 
-        public Task HandleAsync(WindowSizeChangedEvent message, CancellationToken cancellationToken)
-        {
-            WindowHeight = message.Height;
-            WindowWidth = message.Width;
-            return Task.CompletedTask;
-        }
+        //public Task HandleAsync(WindowSizeChangeEvent message, CancellationToken cancellationToken)
+        //{
+        //    WindowHeight = message.Height;
+        //    WindowWidth = message.Width;
+        //    return Task.CompletedTask;
+        //}
 
-        public Task HandleAsync(StartGameEvent message, CancellationToken cancellationToken)
+        public async Task HandleAsync(StartGameEvent message, CancellationToken cancellationToken)
         {
             ResetGame();
             BoardRows = message.BoardHeight;
@@ -177,12 +188,12 @@ namespace Minesweeper.Test.ViewModels
             NotifyOfPropertyChange(() => GameScore);
             Fields.Clear();
 
+            await ChangeWindowMinSize();
+
             foreach (var field in _gameBoard.Board)
             {
                 Fields.Add(new FieldModel(field));
             }
-
-            return Task.CompletedTask;
         }
 
         public void FieldLeftClick(FieldModel field)
@@ -285,6 +296,15 @@ namespace Minesweeper.Test.ViewModels
             }
 
             return valueAsString;
+        }
+
+        private async Task ChangeWindowMinSize()
+        {
+            await _events.PublishOnUIThreadAsync(new WindowSizeChangeEvent
+            {
+                Height = BoardRows * 27.0 + 110.0,
+                Width = BoardColumns * 27.0 + 4.0
+            });
         }
     }
 }
