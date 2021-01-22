@@ -40,10 +40,6 @@
                 <MenuItem x:Name="OpenMenuMenuClick" Header="_Main Menu"/>
                 <MenuItem x:Name="QuitMenuClick" Header="_Quit" />
             </MenuItem>
-            <MenuItem Header="_View">
-                <MenuItem Header="_Window"/>
-                <MenuItem Header="_Full Screen" />
-            </MenuItem>
             <MenuItem Header="_Info">
                 <MenuItem Header="_Instruction"/>
                 <MenuItem Header="_About" />

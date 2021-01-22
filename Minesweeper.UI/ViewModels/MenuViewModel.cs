@@ -26,6 +26,7 @@ namespace Minesweeper.UI.ViewModels
             set
             {
                 _boardRows = value;
+                UpdateNumberOfMines();
                 NotifyOfPropertyChange(() => BoardRows);
             }
         }
@@ -36,6 +37,7 @@ namespace Minesweeper.UI.ViewModels
             set
             {
                 _boardColumns = value;
+                UpdateNumberOfMines();
                 NotifyOfPropertyChange(() => BoardColumns);
             }
         }
@@ -88,6 +90,16 @@ namespace Minesweeper.UI.ViewModels
                 BoardWidth = this.BoardColumns,
                 NumberOfMines = this.NumberOfMines
             });
+        }
+
+        private void UpdateNumberOfMines()
+        {
+            var max = BoardColumns * BoardRows;
+
+            if (NumberOfMines > max)
+            {
+                NumberOfMines = max;
+            }
         }
     }
 }

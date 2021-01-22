@@ -278,8 +278,8 @@ namespace Minesweeper.UI.ViewModels
         {
             await _events.PublishOnUIThreadAsync(new WindowSizeChangeEvent
             {
-                Height = BoardRows * 27.0 + 110.0,
-                Width = BoardColumns * 27.0 + 4.0
+                Height = BoardRows * 22.0 + 110.0,
+                Width = BoardColumns * 22.0 + 4.0
             });
         }
     }
