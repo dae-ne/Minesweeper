@@ -46,23 +46,6 @@ namespace Minesweeper.UI.ViewModels
             }
         }
 
-        //public double WindowHeight
-        //{
-        //    get => _windowHeight;
-        //    set { _windowHeight = value; }
-        //}
-
-        //public double WindowWidth
-        //{
-        //    get => _windowWidth;
-        //    set { _windowWidth = value; }
-        //}
-
-        //public double 
-        //{
-        //    get => GameBoardControl;
-        //}
-
         public double BoardHeight
         {
             get => _boardHeight;
@@ -170,13 +153,6 @@ namespace Minesweeper.UI.ViewModels
         {
             Application.Current.Shutdown();
         }
-
-        //public Task HandleAsync(WindowSizeChangeEvent message, CancellationToken cancellationToken)
-        //{
-        //    WindowHeight = message.Height;
-        //    WindowWidth = message.Width;
-        //    return Task.CompletedTask;
-        //}
 
         public async Task HandleAsync(StartGameEvent message, CancellationToken cancellationToken)
         {

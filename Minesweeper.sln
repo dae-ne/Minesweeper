@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Minesweeper.GameLogic", "Mi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Minesweeper.UI", "Minesweeper.UI\Minesweeper.UI.csproj", "{268878F5-A8EA-42BE-9F2B-011DE22F6B22}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Minesweeper.GameLogic.Tests", "Minesweeper.GameLogic.Tests\Minesweeper.GameLogic.Tests.csproj", "{3CD90062-EB0D-4286-BC66-C971E0B420B9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{268878F5-A8EA-42BE-9F2B-011DE22F6B22}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{268878F5-A8EA-42BE-9F2B-011DE22F6B22}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{268878F5-A8EA-42BE-9F2B-011DE22F6B22}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CD90062-EB0D-4286-BC66-C971E0B420B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CD90062-EB0D-4286-BC66-C971E0B420B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CD90062-EB0D-4286-BC66-C971E0B420B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CD90062-EB0D-4286-BC66-C971E0B420B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
